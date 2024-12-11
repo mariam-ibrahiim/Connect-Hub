@@ -1,0 +1,52 @@
+
+.update-profile-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-text-fill: #008080; 
+    -fx-background-insets: 0;
+}
+.user-name{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000;
+}
+.profile-identifier{
+    -fx-alignment: center;
+}
+.left-panel{
+    -fx-background-color: #f5f5f5;
+    -fx-pref-width: 300px;
+    -fx-padding: 20px;
+}
+.top-button{
+    -fx-pref-width: 250px;
+    -fx-pref-height: 100px;
+    -fx-text-alignment: center;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-background-color: #f5f5f5;
+/*     -fx-border-width: 1px;
+    -fx-border-color: #16161600;
+    -fx-border-style: solid; */
+    -fx-cursor: hand;
+    -fx-text-fill: #008080;
+}
+*{
+    -fx-font-size: 16px;
+}
+/* 
+.profile-photo-container {
+    -fx-border-radius: 50%; 
+    -fx-border-color: #ccc;
+    -fx-border-width: 1.5px;
+    -fx-alignment: center;
+    -fx-pref-width: 150px; 
+    -fx-pref-height: 150px;
+} */
+
+.center-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+

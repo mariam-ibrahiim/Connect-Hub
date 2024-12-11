@@ -1,0 +1,19 @@
+.layout{
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+.button-container{
+    -fx-pref-width: 20px;
+}
+
+.warning {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+}
+
+
+* {
+    -fx-font-size: 16px;
+    -fx-font-family: "Times New Roman",serif;
+}

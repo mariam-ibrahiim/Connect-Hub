@@ -1,0 +1,24 @@
+.specialLabel{
+    -fx-text-fill: teal;
+    -fx-pref-width: 100px;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+.backIcon{
+    -fx-translate-x: 15;
+    -fx-translate-y: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+    -fx-opacity: 0.9;
+}
+.button{
+    -fx-pref-width: 130px;
+    -fx-pref-height: 30px;
+    -fx-background-color: teal;
+    -fx-text-fill: white;
+    -fx-font-size: 13px;
+}
+.label{
+    -fx-text-fill: teal;
+    -fx-pref-width: 130px;
+    -fx-font-size: 13px;
+}

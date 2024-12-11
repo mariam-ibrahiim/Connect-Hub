@@ -1,0 +1,10 @@
+.user-name{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000;
+}
+.profile-identifier{
+}
+*{
+    -fx-font-size: 16px;
+}
