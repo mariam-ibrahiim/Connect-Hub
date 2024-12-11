@@ -1,0 +1,27 @@
+[ {
+  "name" : "mariam",
+  "userId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
+  "email" : "m@gmail.com",
+  "username" : "mariam",
+  "password" : "$2a$10$8usIx8HTv23eqchHwWscC.w24I2PUUJ/VhgyJAqDnq9ZYT3yBGtQW",
+  "dateOfBirth" : "2024-12-24",
+  "status" : "online",
+  "profile" : {
+    "profilePhoto" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 9 - Copy\\Connect-Hub\\Connect-Hub\\resources\\avatar2.png",
+    "coverPhoto" : "resources\\defaultprofile.jpg",
+    "bio" : "No bio"
+  }
+}, {
+  "name" : "nadine",
+  "userId" : "53df491b-974b-4f18-aaeb-9c83cf4bb3a5",
+  "email" : "n@gmail.com",
+  "username" : "nadine",
+  "password" : "$2a$10$Z6qea1otSHRX5LNGLrG.x..dbTBV3VSbo6y9EwIHiRgcZpsMdmSAy",
+  "dateOfBirth" : "2024-12-30",
+  "status" : "offline",
+  "profile" : {
+    "profilePhoto" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 9 - Copy\\Connect-Hub\\Connect-Hub\\resources\\avatar.png",
+    "coverPhoto" : "resources\\defaultprofile.jpg",
+    "bio" : "No bio"
+  }
+} ]

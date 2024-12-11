@@ -1,0 +1,29 @@
+.arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #555;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-cursor: hand;
+}
+
+
+.arrow-button:hover {
+    -fx-background-color: #eee;
+}
+
+.prev-arrow {
+    -fx-shape: "M 10 15 L 30 25 L 30 5 Z"; /* Triangle pointing left */
+}
+
+.next-arrow {
+    -fx-shape: "M 30 15 L 10 25 L 10 5 Z"; /* Triangle pointing right */
+}
+.user-name{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000;
+}
+*{
+    -fx-font-size: 16px;
+}

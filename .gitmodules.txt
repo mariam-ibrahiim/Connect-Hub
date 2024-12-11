@@ -1,0 +1,7 @@
+tmodules and add the following content:
+
+ini
+Copy code
+[submodule "Connect-Hub"]
+    path = Connect-Hub
+    url = <https://github.com/mariam-ibrahim1/Connect-Hub.git>
