@@ -3,3 +3,4 @@
 /lib/
 *.xml
 *.log
+/idea/
