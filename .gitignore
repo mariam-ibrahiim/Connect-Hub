@@ -1,6 +1,6 @@
-/vscode/
+/.vscode/
 /target/
 /lib/
 *.xml
 *.log
-/idea/
+/.idea/
