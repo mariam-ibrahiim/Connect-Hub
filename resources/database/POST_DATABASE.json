@@ -1,25 +1,25 @@
 [ {
-  "contentId" : "84d28fcf-6ae5-4f4c-9b33-122d35f0d35d",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 18, 46, 314007000 ],
+  "contentId" : "e628cf3b-1b62-469b-97ba-9c4338ba47ef",
+  "authorId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "timestamp" : [ 2024, 12, 13, 11, 26, 32, 743889100 ],
   "contentDetails" : {
-    "text" : "e",
+    "text" : "post gdid",
+    "photo" : "C:\\Users\\Nadine\\Desktop\\Lab10-semiFinal\\resources\\avatar.png"
+  }
+}, {
+  "contentId" : "fa6ada32-18fa-4c2f-a1e2-1f50754e1c74",
+  "authorId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "timestamp" : [ 2024, 12, 13, 12, 17, 24, 558409700 ],
+  "contentDetails" : {
+    "text" : "caption bas",
     "photo" : null
   }
 }, {
-  "contentId" : "3e7abf97-d7bb-41b2-9240-c531bda0885e",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 19, 7, 327591400 ],
+  "contentId" : "c6cff1fc-b6a9-4292-9c14-9390d640a16e",
+  "authorId" : "0d937bbf-1c63-4744-a565-e73cbcfdd712",
+  "timestamp" : [ 2024, 12, 13, 22, 29, 1, 608708800 ],
   "contentDetails" : {
-    "text" : "f",
-    "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 10\\Connect-Hub-Lab-10\\resources\\avatar2.png"
-  }
-}, {
-  "contentId" : "1ad32f47-e457-400e-84f4-ee0b97867325",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 19, 43, 287829900 ],
-  "contentDetails" : {
-    "text" : "f",
-    "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 10\\Connect-Hub-Lab-10\\resources\\avatar.png"
+    "text" : "bbbbbbbbbbb",
+    "photo" : null
   }
 } ]

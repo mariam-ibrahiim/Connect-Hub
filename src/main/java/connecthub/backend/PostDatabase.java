@@ -3,6 +3,7 @@ package connecthub.backend;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -69,12 +70,15 @@ public class PostDatabase implements Database{
             }
         }  
         public void deletePost(Content post){
-            for(Content p: posts){
-                if(p.getContentId().equals(post.getContentId())){
-                    posts.remove(p);
-                    break;
-                }
+        Iterator<Content> iterator = posts.iterator();
+        while (iterator.hasNext()) {
+           Content p = iterator.next();
+            if (p.getContentId().equals(post.getContentId())) {
+                iterator.remove();
+                System.out.println("removed");
+                break;
             }
+        }
             save();
         }
         public void addPost(Content post){

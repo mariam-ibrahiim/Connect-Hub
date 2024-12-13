@@ -6,6 +6,11 @@
     -fx-font-size: 15px;
     -fx-font-weight: bold;
 }
+.smallButton{
+    -fx-pref-width: 75px;
+    -fx-pref-height: 35px;
+    -fx-font-size: 11px;
+}
 .HBox{
     -fx-alignment: center;
 }

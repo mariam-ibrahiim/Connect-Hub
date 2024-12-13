@@ -1,7 +1,5 @@
 package connecthub.backend;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,21 +7,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class GroupAdditionNotificationDatabase implements NotificationDatabase{
-    private List<Notification> notifications = new ArrayList<>();
-    private static volatile GroupAdditionNotificationDatabase instance;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-    private GroupAdditionNotificationDatabase() {
+public class GroupRequestNotificationDatabase implements NotificationDatabase{
+    private List<Notification> notifications = new ArrayList<>();
+    private static volatile GroupRequestNotificationDatabase instance;
+
+    private GroupRequestNotificationDatabase() {
         load();
     }
 
-    public static GroupAdditionNotificationDatabase getInstance() {
-        GroupAdditionNotificationDatabase result = instance;
+    public static GroupRequestNotificationDatabase getInstance() {
+       GroupRequestNotificationDatabase result = instance;
         if (result == null) {
-            synchronized (GroupAdditionNotificationDatabase.class) {
+            synchronized (GroupRequestNotificationDatabase.class) {
                 result = instance;
                 if(result == null) {
-                    instance = result = new GroupAdditionNotificationDatabase();
+                    instance = result = new GroupRequestNotificationDatabase();
                 }
             }
         }
@@ -34,29 +35,34 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         try {
-            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("resources\\database\\" + Constants.GROUP_ADDITION_NOTIFICATION_DATABASE + ".json"), notifications);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("resources\\database\\" + Constants.GROUP_REQUEST_NOTIFICATION_DATABASE + ".json"), notifications);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
- /*   public List<Notification> getNotifications() {
-        return notifications;
-    }*/
+
     @Override
     public void load() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
 
-        File file = new File("resources\\database\\" + Constants.GROUP_ADDITION_NOTIFICATION_DATABASE + ".json");
+/*
+        objectMapper.activateDefaultTyping(
+                BasicPolymorphicTypeValidator.builder().allowIfSubType(Notification.class).build(),
+                ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE
+        );
+*/
+
+        File file = new File("resources\\database\\" + Constants.GROUP_REQUEST_NOTIFICATION_DATABASE + ".json");
         if (!file.exists() || file.length() == 0) {
             return;
         }
 
         try {
             //Deserialize
-            //notifications = objectMapper.readerFor(GroupAdditionNotification.class).readValue(file);
+          //  notifications = objectMapper.readerFor(GroupPostNotification.class).readValue(file);
             notifications = objectMapper.readValue(file,
-                    objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, GroupAdditionNotification.class));
+                    objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, GroupRequestNotification.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,6 +72,8 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
         notifications.add(notification);
         save();
     }
+
+    //for safe removal
     @Override
     public void deleteNotification(Notification notification) {
         Iterator<Notification> iterator = notifications.iterator();
@@ -74,10 +82,9 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
             if (n.getNotificationId().equals(notification.getNotificationId())) {
                 iterator.remove();
                 System.out.println("removed");
-                break;
+                break; 
             }
         }
-        
         save();
     }
     @Override

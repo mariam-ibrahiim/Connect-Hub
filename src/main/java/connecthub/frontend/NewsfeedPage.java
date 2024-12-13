@@ -43,6 +43,8 @@ public static void show (Stage stage, String userId){
 
         stage.setOnCloseRequest(e->{
             App.userAccountManager.logout(currentUser);
+            App.userAccountManager.save();
+            App.userAccountManager.load();
         });
 
         //instantiate User profile
@@ -118,6 +120,8 @@ public static void show (Stage stage, String userId){
         });
         logoutButton.setOnAction(e->{
             App.userAccountManager.logout(currentUser);
+                        App.userAccountManager.save();
+            App.userAccountManager.load();
             Platform.exit();
         });
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,45 +155,64 @@ public static void show (Stage stage, String userId){
         listView.setFocusTraversable(true);
 
 
-        searchButton.setOnAction(e->{
-            listView.getItems().clear();
+    searchButton.setOnAction(e->{
+        listView.getItems().clear();
 
-            String key = searchField.getText();
-            List<Object> results = Search.userSearch(key,friendManager);
+        String key = searchField.getText();
+        List<Object> results = Search.userSearch(key,friendManager);
 
-            results.addAll(Search.groupSearch(key));
+        results.addAll(Search.groupSearch(key));
 
-            results.remove(currentUser);
+        results.remove(currentUser);
 
-            for(Object u: results) {
-                if (u instanceof User)
-                    listView.getItems().add(u);
-                if(u instanceof Group)
-                    listView.getItems().add(u);
-            }
+        for(Object u: results) {
+            listView.getItems().add(u);
+            //System.out.println(u.toString());
+        }
 
-            listView.setVisible(true);
-        });
+        listView.setVisible(true);
+    });
 
 
-        listView.setOnMouseClicked(e->{
-            Object selectedObject = listView.getSelectionModel().getSelectedItem();
-            if(selectedObject instanceof User)
-                SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
-            if(selectedObject instanceof Group) {
-                //GroupProfile.show((Group) selectedObject,currentUser);
-                if(((Group) selectedObject).getPrimaryAdmin().getUserId().equals(currentUser.getUserId())){
-                    PrimaryAdmin primaryAdmin = ((Group)selectedObject).getPrimaryAdmin();
-                    PrimaryAdminGroupProfile.show((Group) selectedObject,primaryAdmin,stage,scene);
+    listView.setOnMouseClicked(e->{
+        Object selectedObject = listView.getSelectionModel().getSelectedItem();
+        if(selectedObject instanceof User)
+            SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
+        if(selectedObject instanceof Group) {
+            Group group = ((Group) selectedObject);
+            boolean isMember = group.isMember(userId);
+            if(!isMember){
+                boolean ans = AlertBox.displayConfirmation("Do you want to join "+group.getGroupName()+" group?");
+                if(ans) {
+                  //  Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(userId,group.getGroupId(), "group request"));
+                    GroupRequest groupRequest = new GroupRequest(group.getGroupId(),currentUser.getUserId());
+                    Newsfeed.groupRequestsManager.addRequest(groupRequest);
+                    Newsfeed.groupRequestsManager.saveToFile();
+                   // Notification joinNotification = new GroupAdditionNotification(userId,group.getGroupId());
+                  //  Newsfeed.notficationSystem.addNotification(joinNotification);
+                    AlertBox.displayMessage("Join request sent!");
                 }
-             //   else
-             //   GroupProfile.showProfile((Group) selectedObject,,stage,scene);
             }
-            //new OthersProfile(stage,scene,selectedUser,friendManager);
-        });
+            else {
+                Admin admin = group.getAdmin(userId);
+                if(group.getPrimaryAdmin().getUserId().equals(userId)) {
+                    PrimaryAdminGroupProfile.show(group,group.getPrimaryAdmin(),stage,scene);
+                }
+                else if(admin!=null){
+                    AdminGroupProfile.show(group,admin,stage,scene);
+                }
+                else {
+                    UserGroupProfile.show(group,currentUser,stage,scene);
+                }
+            }
+            //GroupProfile.show((Group) selectedObject,currentUser);
+        }
+        //new OthersProfile(stage,scene,selectedUser,friendManager);
+    });
 
-        VBox searchVbox = new VBox(10, searchHbox, listView);
 
+
+    VBox searchVbox = new VBox(10, searchHbox, listView);
 
 
         VBox menuVbox = new VBox(15,refreshView,profileIdentifier,manageFriendsButton,addStoryButton,addPostButton,createGroupButton,notificationButton,viewGroupsButton,logoutButton,searchVbox);
@@ -260,14 +283,14 @@ refreshView.setOnMouseClicked(e->{
         stage.show();
     }
     private static void showPosts(FriendManagement friendManager,Newsfeed newsfeed,User user,ScrollPane postScrollPane){
-        VBox postsVBox = new VBox();
+        VBox postsVBox = new VBox(20);
         postScrollPane.setContent(null);
         List<Post> posts = newsfeed.getFriendsPosts(user.getUserId());
         for(Post post: posts){
             User postOwner = App.userAccountManager.searchById(post.getAuthorId());
             ObjectProperty<Image> profile = new SimpleObjectProperty<>();
             profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
-           postsVBox.getChildren().add(PostFrame.createPost(post,profile));
+           postsVBox.getChildren().add(ViewerPostFrame.createPost(post,profile));
         }
         postScrollPane.setContent(postsVBox);
     }
@@ -295,6 +318,8 @@ refreshView.setOnMouseClicked(e->{
             ImageView friendView = new ImageView();
             friendView.imageProperty().bind(friendProfile);
             CirclePhotoFrame.createCircleFrame(friendView);
+            friendView.setFitHeight(40);
+            friendView.setFitWidth(40);
             Label friendName = new Label(friend.getName());
             friendName.getStyleClass().add("specialLabel");
             Label status = new Label(friend.getStatus());

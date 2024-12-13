@@ -13,6 +13,7 @@ public class Newsfeed {
     //singletom in those classes
     public static final FriendRequestManagement friendRequestManagement = FriendRequestManagement.getInstance();
     public static final GroupManager groupManager = GroupManager.getInstance();
+    public static final GroupRequestsManager groupRequestsManager = GroupRequestsManager.getInstance();
     public static final NotficationSystem notficationSystem = NotficationSystem.getInstance();
     private FriendManagement friendManagement;
 
@@ -28,6 +29,7 @@ public class Newsfeed {
         friendManagement.reloadDatabase();
         groupManager.loadFromFile();
         notficationSystem.reloadDatabase();
+        groupRequestsManager.loadFromFile();
     }
     public FriendManagement getFriendManagement() {
         return friendManagement;

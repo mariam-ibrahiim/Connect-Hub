@@ -32,6 +32,7 @@ public class UserAccountManager {
         }
         return result;
     }
+    //linear search by username and return the user if found
     public User searchByUsername(String username){
         for (User user : database.getUsers()) {
             if(user.getUsername().equals(username))
@@ -39,6 +40,7 @@ public class UserAccountManager {
         }
         return null;
     }
+    //linear search by email and return the user if found
     public User searchByEmail(String email){
         for (User user : database.getUsers()) {
             if(user.getEmail().equals(email))
@@ -46,7 +48,7 @@ public class UserAccountManager {
         }
         return null;
     }
-
+    //linear search by user id and return the user if found
     public User searchById(String id){
         for (User user : database.getUsers()) {
             if(user.getUserId().equals(id))
@@ -55,6 +57,7 @@ public class UserAccountManager {
         return null;
     }
 
+    //signs up new user to the system
     public boolean signUp (User user){
         User user1 = searchByUsername(user.getUsername());
         if(user1==null){
@@ -74,6 +77,7 @@ public class UserAccountManager {
         return database;
     }
 
+    //user login it returns the logged in user
     public User login(String username,String password){
         User user;
         Pattern pattern = Pattern.compile(Constants.REGEX);

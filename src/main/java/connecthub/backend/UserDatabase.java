@@ -27,6 +27,7 @@ public class UserDatabase { // implements database interface
         return users;
     }
 
+    //saves to user database json file
     public void saveToFile(){
         ObjectMapper objectMapper = new ObjectMapper();
         try {

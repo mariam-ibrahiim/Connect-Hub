@@ -1,6 +1,15 @@
 
 package connecthub.frontend;
 
+import javax.swing.SwingUtilities;
+
+import connecthub.backend.Admin;
+import connecthub.backend.Group;
+import connecthub.backend.Newsfeed;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  *
  * @author NEXT STORE
@@ -9,9 +18,14 @@ public class GroupStatusWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form GroupStatusWindow
+     * 
      */
-    public GroupStatusWindow() {
+    private String userId;
+    private String groupId;
+    public GroupStatusWindow(String userId,String groupId) {
         initComponents();
+        this.userId = userId;
+        this.groupId = groupId;
     }
 
 
@@ -66,49 +80,35 @@ public class GroupStatusWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewButtonActionPerformed
-        // TODO add your handling code here:
-        //view Status
-    }//GEN-LAST:event_ViewButtonActionPerformed
+           SwingUtilities.invokeLater(()->{
+                dispose();
+                Platform.runLater(()->{
+                    Stage stage = App.getPrimaryStage();
+                    Scene previousScene = stage.getScene();
+                    Group group = Newsfeed.groupManager.searchGroupById(groupId);
+                    Admin admin = group.getAdmin(userId);
+                    if(group.getPrimaryAdmin().getUserId().equals(userId)) {
+                        PrimaryAdminGroupProfile.show(group,group.getPrimaryAdmin(),stage,previousScene);
+                    }
+                    else if(admin!=null){
+                        AdminGroupProfile.show(group,admin,stage,previousScene);
+                    }
+                    else {
+                        UserGroupProfile.show(group,App.userAccountManager.searchById(userId),stage,previousScene);
+                    }
+                });
+            });
+            
+    }
 
     private void IgnoreButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IgnoreButtonActionPerformed
-        // TODO add your handling code here:
-        //ignore Notification
-    }//GEN-LAST:event_IgnoreButtonActionPerformed
+        dispose();
+    }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GroupStatusWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GroupStatusWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GroupStatusWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GroupStatusWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GroupStatusWindow().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton IgnoreButton;

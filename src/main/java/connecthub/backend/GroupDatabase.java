@@ -1,6 +1,7 @@
 package connecthub.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class GroupDatabase implements Database{
     @Override
     public void save(){
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("resources\\database\\"+Constants.GROUP_FILENAME+".json"), groups);
             for(Group group:groups)
@@ -40,6 +42,7 @@ public class GroupDatabase implements Database{
     @Override
     public void load() {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         File file = new File("resources\\database\\" + Constants.GROUP_FILENAME + ".json");
         try {
             if (file.length() != 0) {
