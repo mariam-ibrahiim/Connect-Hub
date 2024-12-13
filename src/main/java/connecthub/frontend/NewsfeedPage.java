@@ -205,7 +205,25 @@ public static void show (Stage stage, String userId){
     });
 
 
+
     VBox searchVbox = new VBox(10, searchHbox, listView);
+
+        listView.setOnMouseClicked(e->{
+            Object selectedObject = listView.getSelectionModel().getSelectedItem();
+            if(selectedObject instanceof User)
+                SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
+            if(selectedObject instanceof Group) {
+                //GroupProfile.show((Group) selectedObject,currentUser);
+                if(((Group) selectedObject).getPrimaryAdmin().getUserId().equals(currentUser.getUserId())){
+                    PrimaryAdmin primaryAdmin = ((Group)selectedObject).getPrimaryAdmin();
+                    PrimaryAdminGroupProfile.show((Group) selectedObject,primaryAdmin,stage,scene);
+                }
+             //   else
+             //   GroupProfile.showProfile((Group) selectedObject,,stage,scene);
+            }
+            //new OthersProfile(stage,scene,selectedUser,friendManager);
+        });
+
 
 
 

@@ -18,8 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class PrimaryAdminGroupProfile{
-    public static void show(Group group,PrimaryAdmin primaryAdmin,Stage stage,Scene previousScene){
+public class UserGroupProfile{
+    public static void show(Group group,User user,Stage stage,Scene previousScene){
         Scene scene;
 
         BorderPane pane = new BorderPane();
@@ -50,7 +50,7 @@ public class PrimaryAdminGroupProfile{
 
         refreshView.setOnMouseClicked(event -> {
             Newsfeed.groupManager.loadFromFile();
-            show(group, primaryAdmin, stage, previousScene);
+            show(group, user, stage, previousScene);
         });
 
         groupIdentifier.getChildren().addAll(profilePhotoView,groupName);
@@ -75,15 +75,11 @@ public class PrimaryAdminGroupProfile{
         menuVbox.setPadding(new Insets(10,10,10,10));
 
         Button addPostButton = new Button("Add post");
-        Button promoteAdminButton = new Button("Promote Admin");
-        Button demoteAdminButton = new Button("Demote Admin");
-        Button removeMemberButton = new Button("Remove Admin");
-        Button deleteGroupButton = new Button("Delete Group");
 
 
         HBox buttons = new HBox(10);
         buttons.getChildren().addAll(iconView,refreshView);
-        menuVbox.getChildren().addAll(buttons,addPostButton,promoteAdminButton,demoteAdminButton,removeMemberButton,deleteGroupButton);
+        menuVbox.getChildren().addAll(buttons,addPostButton);
 
 
         pane.setTop(groupIdentifier);
