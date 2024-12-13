@@ -40,7 +40,7 @@ public class GroupDatabase implements Database{
     @Override
     public void load() {
         ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File("C:\\Users\\Nadine\\Desktop\\Trial\\Connect-Hub\\Connect-Hub\\Connect-Hub\\resources\\database\\" + Constants.GROUP_FILENAME + ".json");
+        File file = new File("resources\\database\\" + Constants.GROUP_FILENAME + ".json");
         try {
             if (file.length() != 0) {
                 groups = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, Group.class));

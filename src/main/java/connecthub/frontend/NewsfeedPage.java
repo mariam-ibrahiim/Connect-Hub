@@ -1,6 +1,8 @@
 package connecthub.frontend;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import connecthub.backend.*;
@@ -21,8 +23,10 @@ import javafx.stage.Stage;
 public class NewsfeedPage {
 
 private static ProfileView userProfile;
-    public static void show (Stage stage, User currentUser){
-        final Newsfeed newsfeed = new Newsfeed(currentUser);
+public static void show (Stage stage, String userId){
+    User currentUser = App.userAccountManager.searchById(userId);
+    FileWatcher.startWatching();
+    final Newsfeed newsfeed = new Newsfeed(userId);
 
         //  Friends friends = new Friends();
         //Adding all users to suggested friends except the currentUser's friends and the currentUser itself
@@ -67,6 +71,7 @@ private static ProfileView userProfile;
         Button addPostButton = new Button("Add Post");
         Button createGroupButton = new Button("Create a group");
         Button notificationButton = new Button("Notifications");
+        Button viewGroupsButton = new Button("View Groups");
         Button logoutButton = new Button("Logout");
         Image refreshImage = new Image(new File("resources\\refresh.png").toURI().toString());
         ImageView refreshView = new ImageView(refreshImage);
@@ -84,6 +89,20 @@ private static ProfileView userProfile;
         window.showAsModal(); // Show the window as modal
     }); */
 
+
+    ////////
+    //Show Notifications
+    notificationButton.setOnAction(e->{
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new NotificationFront(userId,friendManager).setVisible(true);
+            }
+        });
+    });
+
+
+    ////////////
+
         addPostButton.setOnAction(e->{
             AddContent.addContent(currentUser, Newsfeed.postManagement);
         });
@@ -91,6 +110,12 @@ private static ProfileView userProfile;
             AddContent.addContent(currentUser, Newsfeed.storyManagement);
         });
 
+        createGroupButton.setOnAction(e->{
+            CreateGroupWindow.show(currentUser);
+        });
+        viewGroupsButton.setOnAction(e->{
+            ViewGroupsWindow.show(currentUser);
+        });
         logoutButton.setOnAction(e->{
             App.userAccountManager.logout(currentUser);
             Platform.exit();
@@ -107,7 +132,7 @@ private static ProfileView userProfile;
         Button searchButton = new Button("Search");
 
 
-        ListView<User> listView = new ListView<>();
+        ListView<Object> listView = new ListView<>();
         listView.setVisible(false);
 
         listView.setPrefHeight(100);
@@ -130,22 +155,36 @@ private static ProfileView userProfile;
             listView.getItems().clear();
 
             String key = searchField.getText();
-            List<User> results = Search.userSearch(key,friendManager);
+            List<Object> results = Search.userSearch(key,friendManager);
 
-            if(results.contains(currentUser))
-                results.remove(currentUser);
+            results.addAll(Search.groupSearch(key));
 
-            for(User u: results)
-                listView.getItems().add(u);
+            results.remove(currentUser);
+
+            for(Object u: results) {
+                if (u instanceof User)
+                    listView.getItems().add(u);
+                if(u instanceof Group)
+                    listView.getItems().add(u);
+            }
 
             listView.setVisible(true);
         });
 
 
         listView.setOnMouseClicked(e->{
-            User selectedUser = listView.getSelectionModel().getSelectedItem();
-            if(selectedUser!=null)
-                SearchResultWindow.show(stage,scene,friendManager,selectedUser);
+            Object selectedObject = listView.getSelectionModel().getSelectedItem();
+            if(selectedObject instanceof User)
+                SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
+            if(selectedObject instanceof Group) {
+                //GroupProfile.show((Group) selectedObject,currentUser);
+                if(((Group) selectedObject).getPrimaryAdmin().getUserId().equals(currentUser.getUserId())){
+                    PrimaryAdmin primaryAdmin = ((Group)selectedObject).getPrimaryAdmin();
+                    PrimaryAdminGroupProfile.show((Group) selectedObject,primaryAdmin,stage,scene);
+                }
+             //   else
+             //   GroupProfile.showProfile((Group) selectedObject,,stage,scene);
+            }
             //new OthersProfile(stage,scene,selectedUser,friendManager);
         });
 
@@ -153,9 +192,10 @@ private static ProfileView userProfile;
 
 
 
-        VBox menuVbox = new VBox(15,refreshView,profileIdentifier,manageFriendsButton,addStoryButton,addPostButton,logoutButton,searchVbox);
+        VBox menuVbox = new VBox(15,refreshView,profileIdentifier,manageFriendsButton,addStoryButton,addPostButton,createGroupButton,notificationButton,viewGroupsButton,logoutButton,searchVbox);
         menuVbox.setPadding(new Insets(10,0,0,10));
 
+       // Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification("53df491b-974b-4f18-aaeb-9c83cf4bb3a5","082171e5-86b8-45cc-9778-95f08f0cbff2", "friend request"));
 
         ScrollPane storyScrollPane = new ScrollPane();
         storyScrollPane.setLayoutX(5);
@@ -185,75 +225,30 @@ private static ProfileView userProfile;
         userName.getStyleClass().add("specialLabel");
         // postsVbox.getStyleClass().add("VBox");
         ScrollPane postScrollPane = new ScrollPane();
-        //postScrollPane.setPrefWidth(400);
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Platform.runLater(() -> {
+        //postScrollPane.setPrefWidth(40);
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Platform.runLater(() -> {
+    //suggestions.getChildren().clear();
 
-            profileIdentifier.getChildren().addAll(profilePhotoView,userName);
-
-          //  renderComponents(friendManager, currentUser, storyScrollPane, pane, friendScrollPane, postScrollPane, newsfeed);
-        });
-        refreshView.setOnMouseClicked(e->{
-            Platform.runLater(()->{
-                profileIdentifier.getChildren().addAll(profilePhotoView,userName);
-                //   renderComponents(friendManager,currentUser,storyScrollPane,pane,friendScrollPane,postScrollPane,newsfeed);
-            });
-        });
-        friendScrollPane.setContent(null);
-        VBox friendsVbox = new VBox(10);
-        friendsVbox.getChildren().clear();
-        Label friendlistLabel = new Label("Friends List");
-        friendlistLabel.getStyleClass().add("specialLabel");
-        friendsVbox.getChildren().add(friendlistLabel);
-        for (String friendId : friendManager.getFriends().getFriendsIds()) {
-            User friend = App.userAccountManager.searchById(friendId);
-            HBox friendIdentifier = new HBox();
-            ObjectProperty<Image> friendProfilePhoto = new SimpleObjectProperty<>();
-            friendProfilePhoto.set(new Image(new File(friend.getProfile().getProfilePhoto()).toURI().toString()));
-            ImageView friendView = new ImageView();
-            friendView.imageProperty().bind(friendProfilePhoto);
-            CirclePhotoFrame.createCircleFrame(profilePhotoView);
-            friendView.setCursor(Cursor.HAND);
-            friendView.setFitWidth(40);
-            friendView.setFitHeight(40);
-            Label friendName = new Label(friend.getName());
-            friendName.getStyleClass().add("specialLabel");
-            Label status = new Label(friend.getStatus());
-            friendIdentifier.getChildren().addAll(friendView,friendName,status);
-            friendsVbox.getChildren().add(friendIdentifier);
+    profileIdentifier.getChildren().addAll(profilePhotoView,userName);
+   renderComponents(friendManager, currentUser, storyScrollPane, pane, friendScrollPane, postScrollPane, newsfeed);
+});
+refreshView.setOnMouseClicked(e->{
+    Platform.runLater(()->{
+    //    friendManager.load();
+      //  App.userAccountManager.save();
+        synchronized (FileWatcher.class) {
+            friendManager.load();
+            friendManager.getFriendRequestManagement().load();
         }
-        friendScrollPane.setContent(friendsVbox);
-        friendScrollPane.setPrefWidth(200);
-        showPosts(friendManager, newsfeed, currentUser, postScrollPane);
-        HBox storyHbox = new HBox(10);
-        for(String userId: friendManager.getFriends().getFriendsIds()){
-            User friend = App.userAccountManager.searchById(userId);
-            ObjectProperty<Image> storyImage = new SimpleObjectProperty<>();
-            storyImage.set(new Image(new File(friend.getProfile().getProfilePhoto()).toURI().toString()));
-            ImageView storyImageView = new ImageView();
-            storyImageView.imageProperty().bind(storyImage);
-            CirclePhotoFrame.createCircleFrame(storyImageView);
-                 /*story.getImageView().setFitWidth(40);
-                story.getImageView().setFitHeight(40);*/
-            storyImageView.setOnMouseClicked(e ->{
-                StoryManagement searchStories = (StoryManagement) Newsfeed.storyManagement;
-                List<Story> stories = searchStories.searchStories(userId);
-                if(stories==null)
-                    return;
-                StorySlider.createStories(
-                        pane,
-                        stories,
-                        friend.getName(),
-                        friend.getProfile().getProfilePhoto()
-                );
-            });
-
-            storyImageView.getStyleClass().add("backIcon");
-            storyHbox.getChildren().add(storyImageView);
-        }
-        storyScrollPane.setContent(storyHbox);
-
-        pane.setRight(friendScrollPane);
+        App.userAccountManager.load();
+        //suggestions.getChildren().clear();
+        NewsfeedPage.show(stage,currentUser.getUserId());
+      //  profileIdentifier.getChildren().addAll(profilePhotoView,userName);
+       // renderComponents(friendManager,currentUser,storyScrollPane,pane,friendScrollPane,postScrollPane,newsfeed);
+    });
+});
+       // pane.setRight(friendScrollPane);
         pane.setTop(storyScrollPane);
         pane.setCenter(postScrollPane);
         pane.setLeft(menuVbox);
@@ -269,33 +264,37 @@ private static ProfileView userProfile;
         postScrollPane.setContent(null);
         List<Post> posts = newsfeed.getFriendsPosts(user.getUserId());
         for(Post post: posts){
-         //   postsVBox.getChildren().add(PostFrame.createPost(post));
+            User postOwner = App.userAccountManager.searchById(post.getAuthorId());
+            ObjectProperty<Image> profile = new SimpleObjectProperty<>();
+            profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
+           postsVBox.getChildren().add(PostFrame.createPost(post,profile));
         }
         postScrollPane.setContent(postsVBox);
     }
 
-/*
 
     private static void renderComponents(FriendManagement friendManager,User currentUser,ScrollPane storyScrollPane,BorderPane pane,ScrollPane friendScrollPane,ScrollPane postScrollPane,Newsfeed newsfeed){
         //   friendManager.load();
         newsfeed.reloadDatabase();
         friendManager.populateSuggested(App.userAccountManager.getDatabase());
         friendManager.load();
+     //   App.userAccountManager.reloadDatabase();
         //   Newsfeed.friendRequestManagement.load();
         //  manageFriends(friendManager);
-        friendScrollPane.setContent(null);
+      //  friendScrollPane.setContent(null);
         VBox friendsVbox = new VBox(10);
-        friendsVbox.getChildren().clear();
+      //  friendsVbox.getChildren().clear();
         Label friendlistLabel = new Label("Friends List");
         friendlistLabel.getStyleClass().add("specialLabel");
         friendsVbox.getChildren().add(friendlistLabel);
         for (String friendId : friendManager.getFriends().getFriendsIds()) {
             User friend = App.userAccountManager.searchById(friendId);
             HBox friendIdentifier = new HBox();
-            ImageView friendView = CirclePhotoFrame.createCircleFrame(friend.getProfile().getProfilePhoto());
-            friendView.setCursor(Cursor.HAND);
-            friendView.setFitWidth(40);
-            friendView.setFitHeight(40);
+            ObjectProperty<Image> friendProfile = new SimpleObjectProperty<>();
+            friendProfile.set(new Image(new File(friend.getProfile().getProfilePhoto()).toURI().toString()));
+            ImageView friendView = new ImageView();
+            friendView.imageProperty().bind(friendProfile);
+            CirclePhotoFrame.createCircleFrame(friendView);
             Label friendName = new Label(friend.getName());
             friendName.getStyleClass().add("specialLabel");
             Label status = new Label(friend.getStatus());
@@ -304,14 +303,22 @@ private static ProfileView userProfile;
         }
         friendScrollPane.setContent(friendsVbox);
         friendScrollPane.setPrefWidth(200);
+        pane.setRight(friendScrollPane);
+
+        ///////////
         showPosts(friendManager, newsfeed, currentUser, postScrollPane);
+
+
         HBox storyHbox = new HBox(10);
         for(String userId: friendManager.getFriends().getFriendsIds()){
             User friend = App.userAccountManager.searchById(userId);
-            ImageView storyImageView = CirclePhotoFrame.createCircleFrame(friend.getProfile().getProfilePhoto());
-                 */
-/*story.getImageView().setFitWidth(40);
-                story.getImageView().setFitHeight(40);*//*
+            ObjectProperty<Image> storyImage = new SimpleObjectProperty<>();
+            storyImage.set(new Image(new File(friend.getProfile().getProfilePhoto()).toURI().toString()));
+            ImageView storyImageView = new ImageView();
+            storyImageView.imageProperty().bind(storyImage);
+            CirclePhotoFrame.createCircleFrame(storyImageView);
+            storyImageView.setFitWidth(40);
+            storyImageView.setFitHeight(40);
 
             storyImageView.setOnMouseClicked(e ->{
                 StoryManagement searchStories = (StoryManagement) Newsfeed.storyManagement;
@@ -331,13 +338,13 @@ private static ProfileView userProfile;
         }
         storyScrollPane.setContent(storyHbox);
     }
-*/
 
     private static void manageFriends(FriendManagement friendManager){
+       // friendManager.load();
         friendManager.populateSuggested(App.userAccountManager.getDatabase());
         friendManager.load();
-        Newsfeed.friendRequestManagement.load();
-        FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager,App.userAccountManager);
+     //   Newsfeed.friendRequestManagement.load();
+        FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager);
         friendManagementFront.setVisible(true);
         friendManagementFront.setLocationRelativeTo(null);
         friendManagementFront.putRequests(friendManager);
@@ -345,4 +352,5 @@ private static ProfileView userProfile;
         friendManagementFront.putBlocked(friendManager);
         friendManagementFront.putSuggested(friendManager);
     }
+
 }

@@ -16,9 +16,9 @@ public class Newsfeed {
     public static final NotficationSystem notficationSystem = NotficationSystem.getInstance();
     private FriendManagement friendManagement;
 
-    public Newsfeed(User user) {
+    public Newsfeed(String userId) {
 
-        friendManagement = FriendManagement.getInstance(user.getUserId(), friendRequestManagement);
+        friendManagement = FriendManagement.getInstance(userId, friendRequestManagement);
     }
 
     public void reloadDatabase(){
@@ -26,6 +26,8 @@ public class Newsfeed {
         storyManagement.reloadDatabase();
         friendRequestManagement.load();
         friendManagement.reloadDatabase();
+        groupManager.loadFromFile();
+        notficationSystem.reloadDatabase();
     }
     public FriendManagement getFriendManagement() {
         return friendManagement;

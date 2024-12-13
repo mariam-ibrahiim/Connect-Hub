@@ -5,11 +5,15 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import connecthub.backend.Content;
 import connecthub.backend.ContentManagement;
+import connecthub.backend.Newsfeed;
+import connecthub.backend.Post;
 import connecthub.backend.PostManagement;
 import connecthub.backend.StoryManagement;
 import connecthub.backend.User;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,10 +22,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AddContent { 
-        private static File file;
+public class EditPost {
+     private static File file;
         private static String imagePath;
-        public static void addContent(User user, ContentManagement contentManagement){
+        public static void editPost(Content post){
         Stage window = new Stage();
         Label captionLabel = new Label("Caption");
         Label imageLabel = new Label("Image");
@@ -42,15 +46,12 @@ public class AddContent {
                 else imagePath=null;
         }});
         saveButton.setOnAction(e-> {
-            if((imagePath == null || imagePath.isEmpty())&& contentManagement instanceof StoryManagement){
-                    AlertBox.displayWarning("You have to attach an image");
-                    return;
-            }
-            if(caption.getText().isEmpty() && imagePath==null && contentManagement instanceof PostManagement){
+            if(caption.getText().isEmpty() && imagePath==null){
                 AlertBox.displayWarning("Caption cannot be empty");
                 return;
             }
-            contentManagement.createContent(user.getUserId(), caption.getText(), imagePath);
+            PostManagement postManagement = (PostManagement) Newsfeed.postManagement;
+            postManagement.editPost(post, caption.getText(), imagePath);
             imagePath=null;
             window.close();
         });
@@ -65,7 +66,7 @@ public class AddContent {
         
         Scene scene = new Scene(layout, 400, 300);
         window.setScene(scene);
-        window.setTitle("Add Content");
+        window.setTitle("Edit Post");
         window.initModality(Modality.APPLICATION_MODAL);
         window.showAndWait();
     }

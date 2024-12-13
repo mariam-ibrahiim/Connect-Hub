@@ -1,5 +1,7 @@
 package connecthub.frontend;
 
+import static connecthub.backend.Newsfeed.postManagement;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,12 @@ import connecthub.backend.UpdateProfile;
 import connecthub.backend.User;
 import connecthub.backend.UserAccountManager;
 import connecthub.backend.Content;
+import connecthub.backend.ContentManagement;
 import connecthub.backend.FriendManagement;
 import connecthub.backend.Newsfeed;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -47,17 +52,14 @@ public class OthersProfile{
         HBox profileIdentifier = new HBox(20);
 
         Label name = new Label(user.getName());
-        Image profilePhoto = new Image(new File(profile.getProfilePhoto()).toURI().toString());
-        profilePhotoView.setImage(profilePhoto);
+        ObjectProperty<Image> profilePhoto = new SimpleObjectProperty<>();
+        profilePhoto.set(new Image(new File(profile.getProfilePhoto()).toURI().toString()));
+        profilePhotoView.imageProperty().bind(profilePhoto);
+        CirclePhotoFrame.createCircleFrame(profilePhotoView);
         Text bioText = new Text(profile.getBio());
         bioPanel = new StackPane(new TextFlow(bioText));
 
         profileIdentifier.getChildren().addAll(profilePhotoView,name);
-        Circle circle= new Circle();
-        circle.radiusProperty().bind(profilePhotoView.fitWidthProperty().divide(2));
-        circle.centerXProperty().bind(profilePhotoView.fitWidthProperty().divide(2));
-        circle.centerYProperty().bind(profilePhotoView.fitHeightProperty().divide(2));
-        profilePhotoView.setClip(circle);
         Image iconImage = new Image(App.class.getResource("/back-icon.png").toExternalForm());
         ImageView iconView = new ImageView(iconImage);
         iconView.getStyleClass().add("backIcon");
@@ -119,15 +121,14 @@ public class OthersProfile{
         VBox content = new VBox(20);
         PostManagement searchPosts = (PostManagement) Newsfeed.postManagement;
         List<Post> posts = searchPosts.searchPosts(user.getUserId()); ;
-/*            for(Content post : posts){
-          centerPanel.getChildren().add(PostFrame.createPost(post));
-           content.getChildren().add(PostFrame.createPost(post,userAccountManager));} */
-        for(int i=posts.size()-1;i>=0;i--){
-           // content.getChildren().add(PostFrame.createPost(posts.get(i)));
+           for(Post post : posts){
+                User postOwner = App.userAccountManager.searchById(post.getAuthorId());
+                ObjectProperty<Image> profile = new SimpleObjectProperty<>();
+                profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
+                content.getChildren().add(PostFrame.createPost(post,profile));
         }
-
         centerPanel.setContent(content);
-    }
+        }
     public void setProfileView(Image image){
         profilePhotoView.setImage(image);
     }

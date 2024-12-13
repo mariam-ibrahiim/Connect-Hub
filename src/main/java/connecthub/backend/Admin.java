@@ -2,7 +2,7 @@ package connecthub.backend;
 
 import java.util.List;
 
-public class Admin {
+public class Admin{
     private String userId;
 
     public Admin(){
@@ -26,9 +26,9 @@ public class Admin {
     }
 
     public void removeMember(User user,Group group){
-        List<User> members = Newsfeed.groupManager.searchGroupById(group.getGroupId()).getMembers();
+        List<String> members = Newsfeed.groupManager.searchGroupById(group.getGroupId()).getMembers();
         if(!group.getAdminsIds().contains(user.getUserId()))
-            members.remove(user);
+            members.remove(user.getUserId());
     }
 
     public void managePosts(){

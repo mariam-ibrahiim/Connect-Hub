@@ -1,5 +1,7 @@
 package connecthub.frontend;
 
+import static connecthub.backend.Newsfeed.postManagement;
+
 import java.io.File;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class ProfileView{
             AddContent.addContent(oldUser,Newsfeed.storyManagement);
         });
         manageFriendsButton.setOnAction(e->{
-          FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager,App.userAccountManager);
+          FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager);
           friendManagementFront.setVisible(true);
           friendManagementFront.setLocationRelativeTo(null);
           friendManagementFront.putRequests(friendManager);
@@ -90,7 +92,21 @@ public class ProfileView{
 
         iconView.setFitWidth(25);
         iconView.setFitHeight(25);
+        Image refreshImage = new Image(new File("resources\\refresh.png").toURI().toString());
+        ImageView refreshView = new ImageView(refreshImage);
+        refreshView.setFitWidth(25);
+        refreshView.setFitHeight(25);
+        refreshView.getStyleClass().add("refresh-icon");
+        refreshView.setCursor(Cursor.HAND);
         
+
+        ///refresh Posts
+        refreshView.setOnMouseClicked(e->{
+          Platform.runLater(()->{
+            Newsfeed.postManagement.reloadDatabase();
+            showPostsAction(oldUser, centerPanel, profilePhoto);
+          });
+      });
 
 
         leftPanel.getChildren().addAll(iconView,profileIdentifier,bioPanel,updateProfileButtonContainer,addPostButton,addStoryButton,manageFriendsButton,logoutButton);
@@ -100,7 +116,7 @@ public class ProfileView{
         Button showPosts = new Button("Posts");
         Button showFriends = new Button("Friends");
       //  Button showStories = new Button("Stories");
-        topPanel.getChildren().addAll(showPosts,showFriends);
+        topPanel.getChildren().addAll(refreshView,showPosts,showFriends);
 
         profilePhotoView.setFitWidth(150);
         profilePhotoView.setFitHeight(150);

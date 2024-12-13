@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.exc.StreamWriteException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import javafx.geometry.Pos;
 
 public class PostDatabase implements Database{
        List<Content> posts;
@@ -70,7 +69,13 @@ public class PostDatabase implements Database{
             }
         }  
         public void deletePost(Content post){
-            posts.remove(post);
+            for(Content p: posts){
+                if(p.getContentId().equals(post.getContentId())){
+                    posts.remove(p);
+                    break;
+                }
+            }
+            save();
         }
         public void addPost(Content post){
             posts.add(post);

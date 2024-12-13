@@ -1,11 +1,55 @@
 package connecthub.backend;
 
-public abstract class Notification{
-  //  private String message;
-    private String userId;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-    public Notification(String userId) {
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+/*@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "@type"
+)*/
+/*@JsonSubTypes({
+        @JsonSubTypes.Type(value = FriendRequestNotification.class, name = "friendRequest"),
+        @JsonSubTypes.Type(value = GroupAdditionNotification.class, name = "groupAddition"),
+        @JsonSubTypes.Type(value = GroupPostNotification.class, name = "groupPost"),
+        @JsonSubTypes.Type(value = GroupStatusNotification.class, name = "groupStatus")
+})*/
+public abstract class Notification{
+
+    //  private String message;
+    private String notificationId;
+    private String userId;
+    private String id2;
+    private LocalDateTime timestamp;
+
+    public void setId2(String id2) {
+        this.id2 = id2;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getId2() {
+        return id2;
+    }
+
+    public Notification(String userId,String id2) {
+        notificationId = UUID.randomUUID().toString();
         this.userId = userId;
+        this.id2 = id2;
+        timestamp=LocalDateTime.now();
+
+    }
+
+    public Notification(){
     }
 
     public String getUserId() {
@@ -16,14 +60,23 @@ public abstract class Notification{
         this.userId = userId;
     }
 
- //   public abstract Notification createNotification();
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
+    }
+
+/*     @Override
+    public String toString() {
+        return "Notification [type=" + getClass().getSimpleName() + ", userId=" + userId + ", id2=" + id2 + "]";
+    } */
+ //   public abstract String getType();
+
+
+    //   public abstract Notification createNotification();
 /*    public abstract void notifyUser(Notification notification); {
         Newsfeed.notficationSystem.addNotification(notification);
     }*/
 }
-//override toString
-//create a notification
-//for each notification
-//if user sends friend request I want to add it to list of notifications for the certain user
-//call notify user and create notification of type
-//notify bb3tlha userid and then create an object
