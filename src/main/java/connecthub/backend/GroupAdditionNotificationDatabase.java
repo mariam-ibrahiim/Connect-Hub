@@ -67,7 +67,12 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
     }
     @Override
     public void deleteNotification(Notification notification) {
-        notifications.remove(notification);
+        for(Notification notification1 : notifications){
+            if(notification1.getNotificationId().equals(notification.getNotificationId())){
+                notifications.remove(notification1);
+                break;
+            }
+        }
         save();
     }
     @Override

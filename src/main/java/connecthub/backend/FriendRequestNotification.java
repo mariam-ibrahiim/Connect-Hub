@@ -8,6 +8,7 @@ public class FriendRequestNotification extends Notification {
         super(receiverId,senderId);
     }
     public FriendRequestNotification(){
+
     }
 
     @Override

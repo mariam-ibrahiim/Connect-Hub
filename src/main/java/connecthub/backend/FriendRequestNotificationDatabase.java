@@ -74,7 +74,12 @@ public class FriendRequestNotificationDatabase implements NotificationDatabase{
     }
     @Override
     public void deleteNotification(Notification notification) {
-        notifications.remove(notification);
+        for(Notification friendRequestNotification : notifications){
+            if(friendRequestNotification.getNotificationId().equals(notification.getNotificationId())){
+                notifications.remove(friendRequestNotification);
+                break;
+            }
+        }
         save();
     }
     @Override

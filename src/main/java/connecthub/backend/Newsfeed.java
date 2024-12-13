@@ -26,6 +26,8 @@ public class Newsfeed {
         storyManagement.reloadDatabase();
         friendRequestManagement.load();
         friendManagement.reloadDatabase();
+        groupManager.loadFromFile();
+        notficationSystem.reloadDatabase();
     }
     public FriendManagement getFriendManagement() {
         return friendManagement;

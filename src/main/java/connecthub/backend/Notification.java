@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /*@JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 public abstract class Notification{
 
     //  private String message;
+    private String notificationId;
     private String userId;
     private String id2;
     private LocalDateTime timestamp;
@@ -40,6 +42,7 @@ public abstract class Notification{
     }
 
     public Notification(String userId,String id2) {
+        notificationId = UUID.randomUUID().toString();
         this.userId = userId;
         this.id2 = id2;
         timestamp=LocalDateTime.now();
@@ -55,6 +58,14 @@ public abstract class Notification{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public void setNotificationId(String notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public String getNotificationId() {
+        return notificationId;
     }
 
 /*     @Override

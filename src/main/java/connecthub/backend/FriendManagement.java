@@ -106,12 +106,15 @@ public class FriendManagement {
         friendsDataBase.addFriend(senderId,userId);
         friendsDataBase.removeSuggested(userId, senderId);
         friendsDataBase.removeSuggested(senderId,userId);
-
+ 
         friendRequestManagement.load();
         FriendRequest request = friendRequestManagement.findRequest(senderId, userId);
         if (request != null) {
             friendRequestManagement.acceptRequest(senderId, userId);
             System.out.println("Request accepted.");
+            Notification notification = Newsfeed.notficationSystem.searchForNotification(userId, senderId);
+            if(notification!=null)
+            Newsfeed.notficationSystem.removeNotification(notification);
         } else {
             System.out.println("No request found.");
         }
@@ -133,6 +136,9 @@ public class FriendManagement {
             // Decline the friend request (remove it from the database)
             friendRequestManagement.declineRequest(senderId, userId);
             System.out.println("Request declined.");
+            Notification notification = Newsfeed.notficationSystem.searchForNotification(userId, senderId);
+            if(notification!=null)
+            Newsfeed.notficationSystem.removeNotification(notification);
         } else {
             // If no request is found, print an error message
             System.out.println("No request found.");

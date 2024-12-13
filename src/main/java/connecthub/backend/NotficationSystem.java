@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class NotficationSystem {
-    private boolean isActive;
+  //  private boolean isActive;
     private static NotficationSystem instance;
     private final FriendRequestNotificationDatabase friendRequestNotificationDatabase = FriendRequestNotificationDatabase.getInstance();
     private final GroupPostNotificationDatabase groupPostNotificationDatabase = GroupPostNotificationDatabase.getInstance();
@@ -55,10 +55,11 @@ public class NotficationSystem {
         }
 
     }
+
     /*    public List<Notification> getNotifications() {
             return notifications;
         }*/
-    public boolean isActive() {
+/*     public boolean isActive() {
         return isActive;
     }
     public void setActive(boolean active) {
@@ -67,6 +68,14 @@ public class NotficationSystem {
     public void ignoreNotiification(Notification notification) {
         setActive(false);
     }
+ */
+
+ public void reloadDatabase(){
+        friendRequestNotificationDatabase.load();
+        groupPostNotificationDatabase.load();
+        groupAdditionNotificationDatabase.load();
+        groupStatusNotificationDatabase.load();
+ }
 
     public List<Notification> getNotificationsForUser(String userId) {
         List<Notification> notifications = new ArrayList<>();
@@ -77,5 +86,17 @@ public class NotficationSystem {
         notifications.sort(Comparator.comparing(Notification::getTimestamp).reversed());
         return notifications;
     }
+    public Notification searchForNotification(String userId,String id2){
+        List<Notification> notifications = getNotificationsForUser(userId);
+        for(Notification notification : notifications){
+            if(notification.getId2().equals(id2)){
+                System.out.println("Notification found");
+
+                return notification;
+            }
+        }
+        return null;
+    }
+
 
 }

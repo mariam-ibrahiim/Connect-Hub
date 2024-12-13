@@ -4,6 +4,7 @@ package connecthub.frontend;
 import javax.swing.*;
 
 import connecthub.backend.FriendManagement;
+import connecthub.backend.Newsfeed;
 import connecthub.backend.User;
 //import connecthub.backend.App.userAccountManager;
 
@@ -428,8 +429,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.getFriendRequestManagement().load();
             friendManagement.acceptFriend(user.getUserId());
-
-
+          //  Newsfeed.notficationSystem.searchForNotification(friendManagement.getUserId(), user.getUserId());
             jTableFriends.removeAll();
             putFriends(friendManagement);
             jTableBlocked1.removeAll();
