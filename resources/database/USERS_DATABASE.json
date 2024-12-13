@@ -1,26 +1,39 @@
 [ {
-  "name" : "mariam",
-  "userId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "email" : "m@gmail.com",
-  "username" : "mariam",
-  "password" : "$2a$10$8usIx8HTv23eqchHwWscC.w24I2PUUJ/VhgyJAqDnq9ZYT3yBGtQW",
-  "dateOfBirth" : "2024-12-24",
+  "name" : "Nadine",
+  "userId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "email" : "n@gmail.com",
+  "username" : "nadine",
+  "password" : "$2a$10$XinHNb2ocLsnkSmiKslUZusLLyDHmJ41rag56H7cXAIeNE5fZ6Yve",
+  "dateOfBirth" : "2024-12-01",
   "status" : "offline",
   "profile" : {
-    "profilePhoto" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 9 - Copy\\Connect-Hub\\Connect-Hub\\resources\\avatar2.png",
+    "profilePhoto" : "resources\\defaultprofile.jpg",
     "coverPhoto" : "resources\\defaultprofile.jpg",
     "bio" : "No bio"
   }
 }, {
-  "name" : "nadine",
-  "userId" : "53df491b-974b-4f18-aaeb-9c83cf4bb3a5",
-  "email" : "n@gmail.com",
-  "username" : "nadine",
-  "password" : "$2a$10$Z6qea1otSHRX5LNGLrG.x..dbTBV3VSbo6y9EwIHiRgcZpsMdmSAy",
-  "dateOfBirth" : "2024-12-30",
+  "name" : "Mariam",
+  "userId" : "65a2a939-f18f-4e13-949b-8c28028c13b7",
+  "email" : "m@gmail.com",
+  "username" : "mariam",
+  "password" : "$2a$10$.Unt97WMTN/g7/IePAMV2.uURYmduFbfchjdtDrdFWGoYIMAqu3Cy",
+  "dateOfBirth" : "2024-12-01",
   "status" : "offline",
   "profile" : {
-    "profilePhoto" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 9 - Copy\\Connect-Hub\\Connect-Hub\\resources\\avatar.png",
+    "profilePhoto" : "resources\\defaultprofile.jpg",
+    "coverPhoto" : "resources\\defaultprofile.jpg",
+    "bio" : "No bio"
+  }
+}, {
+  "name" : "Nada",
+  "userId" : "e7e7b660-2382-4e59-a16a-d22da9ec700d",
+  "email" : "nada@gmail.com",
+  "username" : "nada",
+  "password" : "$2a$10$eH7rR5SRWXH6/4tfR1F3Lui7wO7M/nxp5SwR5w5i3kJHEvbdwdtZm",
+  "dateOfBirth" : "2024-12-01",
+  "status" : "offline",
+  "profile" : {
+    "profilePhoto" : "resources\\defaultprofile.jpg",
     "coverPhoto" : "resources\\defaultprofile.jpg",
     "bio" : "No bio"
   }

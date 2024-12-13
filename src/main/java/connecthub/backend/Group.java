@@ -51,10 +51,6 @@ public class Group {
         return ids;
     }
 
-    //NOTE CHECK IF CONTAINS DOESN'T RETURN THE SAME ADDRESS
-    public boolean isAdmin(String userId){
-        return admins.contains(userId);
-    }
 
     public boolean isMember(String userId){
         return members.contains(userId);
@@ -100,6 +96,13 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Admin getAdmin(String userId){
+        for(Admin admin : admins)
+            if(admin.getUserId().equals(userId))
+                return admin;
+        return null;
     }
 
     @Override

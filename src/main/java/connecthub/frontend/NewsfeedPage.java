@@ -151,38 +151,61 @@ public static void show (Stage stage, String userId){
         listView.setFocusTraversable(true);
 
 
-        searchButton.setOnAction(e->{
-            listView.getItems().clear();
+    searchButton.setOnAction(e->{
+        listView.getItems().clear();
 
-            String key = searchField.getText();
-            List<Object> results = Search.userSearch(key,friendManager);
+        String key = searchField.getText();
+        List<Object> results = Search.userSearch(key,friendManager);
 
-            results.addAll(Search.groupSearch(key));
+        results.addAll(Search.groupSearch(key));
 
-            results.remove(currentUser);
+        results.remove(currentUser);
 
-            for(Object u: results) {
-                if (u instanceof User)
-                    listView.getItems().add(u);
-                if(u instanceof Group)
-                    listView.getItems().add(u);
+        for(Object u: results) {
+            listView.getItems().add(u);
+            //System.out.println(u.toString());
+        }
+
+        listView.setVisible(true);
+    });
+
+
+    listView.setOnMouseClicked(e->{
+        Object selectedObject = listView.getSelectionModel().getSelectedItem();
+        if(selectedObject instanceof User)
+            SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
+        if(selectedObject instanceof Group) {
+            Group group = ((Group) selectedObject);
+            boolean isMember = group.isMember(userId);
+            if(!isMember){
+                boolean ans = AlertBox.displayConfirmation("Do you want to join "+group.getGroupName()+" group?");
+                if(ans) {
+                    GroupRequest groupRequest = new GroupRequest(group.getGroupId(),userId);
+                    Newsfeed.groupRequestsDatabase.addRequest(groupRequest);
+                    Newsfeed.groupRequestsDatabase.save();
+                    AlertBox.displayMessage("Join request sent!");
+                }
+            }
+            else {
+                Admin admin = group.getAdmin(userId);
+                if(group.getPrimaryAdmin().getUserId().equals(userId)) {
+                    GroupProfile.showProfile(group,group.getPrimaryAdmin());
+                }
+                else if(admin!=null){
+                    GroupProfile.showProfile(group,admin);
+                }
+                else {
+                    GroupProfile.showProfile(group,currentUser);
+                }
             }
 
-            listView.setVisible(true);
-        });
+            //GroupProfile.show((Group) selectedObject,currentUser);
+        }
+        //new OthersProfile(stage,scene,selectedUser,friendManager);
+    });
 
 
-        listView.setOnMouseClicked(e->{
-            Object selectedObject = listView.getSelectionModel().getSelectedItem();
-            if(selectedObject instanceof User)
-                SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
-            if(selectedObject instanceof Group) {
-                //GroupProfile.show((Group) selectedObject,currentUser);
-            }
-            //new OthersProfile(stage,scene,selectedUser,friendManager);
-        });
-
-        VBox searchVbox = new VBox(10, searchHbox, listView);
+    VBox searchVbox = new VBox(10, searchHbox, listView);
 
 
 

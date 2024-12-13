@@ -13,6 +13,7 @@ public class Newsfeed {
     //singletom in those classes
     public static final FriendRequestManagement friendRequestManagement = FriendRequestManagement.getInstance();
     public static final GroupManager groupManager = GroupManager.getInstance();
+    public static final GroupRequestsDatabase groupRequestsDatabase = GroupRequestsDatabase.getInstance();
     public static final NotficationSystem notficationSystem = NotficationSystem.getInstance();
     private FriendManagement friendManagement;
 

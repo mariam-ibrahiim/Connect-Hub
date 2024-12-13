@@ -1,11 +1,11 @@
 [ {
-  "groupName" : "add",
-  "groupId" : "99b4ce19-5205-4aa1-9838-82731684d67a",
+  "groupName" : "Groooup",
+  "groupId" : "14465722-b3be-4228-bb47-42f18e69a6a5",
   "primaryAdmin" : {
-    "userId" : "082171e5-86b8-45cc-9778-95f08f0cbff2"
+    "userId" : "d6063696-91b1-4d77-b879-79f614f9d507"
   },
   "admins" : [ ],
-  "members" : [ "082171e5-86b8-45cc-9778-95f08f0cbff2" ],
+  "members" : [ "d6063696-91b1-4d77-b879-79f614f9d507" ],
   "profile" : {
     "profilePhoto" : "resources\\defaultprofile.jpg",
     "coverPhoto" : "resources\\defaultprofile.jpg",

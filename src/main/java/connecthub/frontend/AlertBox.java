@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,8 +37,8 @@ public class AlertBox {
         layout.getStyleClass().add("layout");
         buttonContainer.getStyleClass().add("button-container");
         buttonContainer.setAlignment(Pos.CENTER_RIGHT);
-    //    Image warningIcon = new Image("C:\\TERM 5\\Programming II\\Assignments\\Lab 5 copy - Copy\\Lab5\\GymMembershipManagementSystem\\warning.png");
-       // Image warningIcon = new Image(getClass().getResource("warning.png").toExternalForm());
+        //    Image warningIcon = new Image("C:\\TERM 5\\Programming II\\Assignments\\Lab 5 copy - Copy\\Lab5\\GymMembershipManagementSystem\\warning.png");
+        // Image warningIcon = new Image(getClass().getResource("warning.png").toExternalForm());
         Image warningIcon = new Image(new File("warning.png").toURI().toString());
         ImageView iconView = new ImageView(warningIcon);
         HBox warning = new HBox(20);
@@ -60,6 +61,14 @@ public class AlertBox {
         Alert confirmationAlert = new Alert(AlertType.INFORMATION);
         confirmationAlert.setContentText(message);
         confirmationAlert.showAndWait();
+    }
+
+    public static boolean displayConfirmation(String message){
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Message");
+        alert.setHeaderText(message);
+        ButtonType action = alert.showAndWait().orElse(ButtonType.CANCEL);
+        return action == ButtonType.OK;
     }
 }
 

@@ -1,1 +1,10 @@
-[ ]
+[ {
+  "senderId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "receiverId" : "65a2a939-f18f-4e13-949b-8c28028c13b7"
+}, {
+  "senderId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "receiverId" : "a15b2a67-a273-4fd2-b4b4-088427fd5063"
+}, {
+  "senderId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "receiverId" : "e7e7b660-2382-4e59-a16a-d22da9ec700d"
+} ]
