@@ -1,0 +1,16 @@
+[ {
+  "groupName" : "add",
+  "groupId" : "99b4ce19-5205-4aa1-9838-82731684d67a",
+  "primaryAdmin" : {
+    "userId" : "082171e5-86b8-45cc-9778-95f08f0cbff2"
+  },
+  "admins" : [ ],
+  "members" : [ "082171e5-86b8-45cc-9778-95f08f0cbff2" ],
+  "profile" : {
+    "profilePhoto" : "resources\\defaultprofile.jpg",
+    "coverPhoto" : "resources\\defaultprofile.jpg",
+    "bio" : "No bio"
+  },
+  "description" : "No description",
+  "adminsIds" : [ ]
+} ]

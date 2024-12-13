@@ -4,6 +4,8 @@ public class GroupAdditionNotification extends Notification{
     public GroupAdditionNotification(String userId, String groupId) {
         super(userId,groupId);
     }
+    public GroupAdditionNotification(){
+    }
 
     @Override
     public String toString(){

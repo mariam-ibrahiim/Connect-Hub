@@ -32,6 +32,7 @@ public class StoryDatabase implements Database{
         }
         return result;
     }
+    @Override
     public void save(){
            ObjectMapper objectMapper = new ObjectMapper();
            objectMapper.registerModule(new JavaTimeModule());
@@ -50,6 +51,7 @@ public class StoryDatabase implements Database{
     public List<Content> getStories() {
         return stories;
     }
+    @Override
     public void load(){
          ObjectMapper objectMapper = new ObjectMapper();
          objectMapper.registerModule(new JavaTimeModule());

@@ -54,7 +54,7 @@ public class ProfileView{
             AddContent.addContent(oldUser,Newsfeed.storyManagement);
         });
         manageFriendsButton.setOnAction(e->{
-          FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager,App.userAccountManager);
+          FriendManagementFront friendManagementFront = new FriendManagementFront(friendManager);
           friendManagementFront.setVisible(true);
           friendManagementFront.setLocationRelativeTo(null);
           friendManagementFront.putRequests(friendManager);

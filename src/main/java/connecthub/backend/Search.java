@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search {
-    public static List<User> userSearch(String key,FriendManagement friendManager){
-        List<User> results = new ArrayList<>();
+    public static List<Object> userSearch(String key,FriendManagement friendManager){
+        List<Object> results = new ArrayList<>();
         for(User user : App.userAccountManager.getUsers()){
             if(user.getName().toLowerCase().contains(key)){
                 if(!friendManager.getBlocked().isBlocked(user.getUserId()))
@@ -19,8 +19,8 @@ public class Search {
         return results;
     }
 
-    public static List<Group> groupSearch (String key){
-        List<Group> results = new ArrayList<>();
+    public static List<Object> groupSearch (String key){
+        List<Object> results = new ArrayList<>();
         for(Group group: Newsfeed.groupManager.getGroups()){
             if(group.getGroupName().toLowerCase().contains(key))
                 results.add(group);

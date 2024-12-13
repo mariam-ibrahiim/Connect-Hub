@@ -10,6 +10,7 @@ public class FriendManagement {
     private FriendRequestManagement friendRequestManagement;
     private FriendsDataBase friendsDataBase;
     private static volatile FriendManagement instance;
+    
 
 
     public String getUserId() {

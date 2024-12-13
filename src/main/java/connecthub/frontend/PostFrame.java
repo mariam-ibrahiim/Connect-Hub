@@ -60,6 +60,8 @@ public class PostFrame {
         VBox postFrame = new VBox(20);
 
         //adding image to a rectangle shape
+        if(post.getContentDetails().getPhoto()!=null){
+        
         Image attachedImage = new Image(new File(post.getContentDetails().getPhoto()).toURI().toString()); //why was it new Image(new File(user.getProfile().getProfilePhoto()).toURI().toString());
         ImageView attachedImageView = new ImageView(attachedImage);
         attachedImageView.setFitWidth(300);
@@ -70,7 +72,10 @@ public class PostFrame {
         rectangle.setHeight(attachedImageView.getFitHeight());
         attachedImageView.setClip(rectangle);
 
-        postFrame.getChildren().addAll(profileIdentifier,textPanel,attachedImageView);
+        postFrame.getChildren().addAll(profileIdentifier,textPanel,attachedImageView);}
+        else{
+            postFrame.getChildren().addAll(profileIdentifier,textPanel);
+        }
         postFrame.getStylesheets().add(PostFrame.class.getResource("/css/Post.css").toExternalForm());
      //  profileIdentifier.getStyleClass().add("profile-identifier");
         /*VBox vBox = new VBox(10);

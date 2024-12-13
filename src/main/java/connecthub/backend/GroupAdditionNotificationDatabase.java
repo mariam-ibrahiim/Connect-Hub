@@ -32,11 +32,6 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
     public void save(){
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
-        //Polymorphic handling
-  /*      objectMapper.activateDefaultTyping(
-                BasicPolymorphicTypeValidator.builder().allowIfSubType(Notification.class).build(),
-                ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE
-        );*/
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("resources\\database\\" + Constants.GROUP_ADDITION_NOTIFICATION_DATABASE + ".json"), notifications);
         } catch (IOException e) {

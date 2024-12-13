@@ -25,7 +25,6 @@ public abstract class Notification{
 
     public void setId2(String id2) {
         this.id2 = id2;
-        this.timestamp=LocalDateTime.now();
     }
 
     public LocalDateTime getTimestamp() {
@@ -43,6 +42,8 @@ public abstract class Notification{
     public Notification(String userId,String id2) {
         this.userId = userId;
         this.id2 = id2;
+        timestamp=LocalDateTime.now();
+
     }
 
     public Notification(){
@@ -56,10 +57,10 @@ public abstract class Notification{
         this.userId = userId;
     }
 
-    @Override
+/*     @Override
     public String toString() {
         return "Notification [type=" + getClass().getSimpleName() + ", userId=" + userId + ", id2=" + id2 + "]";
-    }
+    } */
  //   public abstract String getType();
 
 
@@ -68,9 +69,3 @@ public abstract class Notification{
         Newsfeed.notficationSystem.addNotification(notification);
     }*/
 }
-//override toString
-//create a notification
-//for each notification
-//if user sends friend request I want to add it to list of notifications for the certain user
-//call notify user and create notification of type
-//notify bb3tlha userid and then create an object

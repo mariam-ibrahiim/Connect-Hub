@@ -53,7 +53,7 @@ public class LoginForm {
         loginButton.setOnAction(e->{
             User login = App.userAccountManager.login(usernameField.getText(),passwordField.getText());
             if(login!=null)
-                NewsfeedPage.show(stage,login);
+                NewsfeedPage.show(stage,login.getUserId());
         });
 
         iconView.setOnMouseClicked(event -> {

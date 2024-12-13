@@ -7,7 +7,8 @@ public class FriendRequestNotification extends Notification {
     public FriendRequestNotification(String senderId, String receiverId) {
         super(receiverId,senderId);
     }
-
+    public FriendRequestNotification(){
+    }
 
     @Override
     public String toString() {

@@ -2,7 +2,7 @@ package connecthub.backend;
 
 import java.util.UUID;
 
-public class User {
+public class User{
     private String name;
     private String userId;
     private String email;

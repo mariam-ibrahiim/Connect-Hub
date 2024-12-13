@@ -6,6 +6,8 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import connecthub.backend.ContentManagement;
+import connecthub.backend.PostManagement;
+import connecthub.backend.StoryManagement;
 import connecthub.backend.User;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -37,8 +39,17 @@ public class AddContent {
                 if (file != null) {
             imagePath = file.getPath();
                 }
+                else imagePath=null;
         }});
         saveButton.setOnAction(e-> {
+            if((imagePath == null || imagePath.isEmpty())&& contentManagement instanceof StoryManagement){
+                    AlertBox.displayWarning("You have to attach an image");
+                    return;
+            }
+            if(caption.getText().isEmpty() && imagePath==null && contentManagement instanceof PostManagement){
+                AlertBox.displayWarning("Caption cannot be empty");
+                return;
+            }
             contentManagement.createContent(user.getUserId(), caption.getText(), imagePath);
             window.close();
         });

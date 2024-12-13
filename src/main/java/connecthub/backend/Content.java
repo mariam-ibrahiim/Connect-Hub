@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public  abstract class Content {
     private String contentId,authorId;
-    protected LocalDateTime timestamp;
+    private LocalDateTime timestamp;
     private ContentDetails contentDetails;
        public Content(String authorId,String text,String image){
         contentId = UUID.randomUUID().toString();

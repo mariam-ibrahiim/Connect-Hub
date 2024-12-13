@@ -16,6 +16,8 @@ import connecthub.backend.Content;
 import connecthub.backend.FriendManagement;
 import connecthub.backend.Newsfeed;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -119,15 +121,14 @@ public class OthersProfile{
         VBox content = new VBox(20);
         PostManagement searchPosts = (PostManagement) Newsfeed.postManagement;
         List<Post> posts = searchPosts.searchPosts(user.getUserId()); ;
-/*            for(Content post : posts){
-          centerPanel.getChildren().add(PostFrame.createPost(post));
-           content.getChildren().add(PostFrame.createPost(post,userAccountManager));} */
-        for(int i=posts.size()-1;i>=0;i--){
-           // content.getChildren().add(PostFrame.createPost(posts.get(i)));
+           for(Post post : posts){
+                User postOwner = App.userAccountManager.searchById(post.getAuthorId());
+                ObjectProperty<Image> profile = new SimpleObjectProperty<>();
+                profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
+                content.getChildren().add(PostFrame.createPost(post,profile));
         }
-
         centerPanel.setContent(content);
-    }
+        }
     public void setProfileView(Image image){
         profilePhotoView.setImage(image);
     }

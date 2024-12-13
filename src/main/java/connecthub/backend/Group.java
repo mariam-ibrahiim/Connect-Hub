@@ -9,7 +9,9 @@ public class Group {
     private String groupId;
     private PrimaryAdmin primaryAdmin;
     private List<Admin> admins = new ArrayList<>();
-    private List<User> members = new ArrayList<>();
+    private List<String> members = new ArrayList<>();
+    private Profile profile = new Profile();
+    private String description = "No description";
 
     public Group(){
 
@@ -18,6 +20,7 @@ public class Group {
         this.groupName = groupName;
         this.groupId = UUID.randomUUID().toString();
         this.primaryAdmin = primaryAdmin;
+        members.add(primaryAdmin.getUserId());
     }
 
     public String getGroupName() {
@@ -50,7 +53,11 @@ public class Group {
 
     //NOTE CHECK IF CONTAINS DOESN'T RETURN THE SAME ADDRESS
     public boolean isAdmin(String userId){
-        return getAdminsIds().contains(userId);
+        return admins.contains(userId);
+    }
+
+    public boolean isMember(String userId){
+        return members.contains(userId);
     }
     public void addAdmin(Admin admin){
         admins.add(admin);
@@ -63,11 +70,11 @@ public class Group {
         this.admins = admins;
     }
 
-    public List<User> getMembers() {
+    public List<String> getMembers() {
         return members;
     }
 
-    public void setMembers(List<User> members) {
+    public void setMembers(List<String> members) {
         this.members = members;
     }
 
@@ -77,6 +84,27 @@ public class Group {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString(){
+        return groupName;
     }
 
 }

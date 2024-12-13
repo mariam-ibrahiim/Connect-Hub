@@ -8,6 +8,9 @@ public class GroupStatusNotification extends Notification{
         super(userId, groupId);
     }
 
+    public GroupStatusNotification() {
+    }
+
     @Override
     public String toString() {
         Group group = Newsfeed.groupManager.searchGroupById(getId2());

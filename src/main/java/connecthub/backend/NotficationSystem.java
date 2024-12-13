@@ -67,9 +67,7 @@ public class NotficationSystem {
     public void ignoreNotiification(Notification notification) {
         setActive(false);
     }
-    public void notifyUser() {
 
-    }
     public List<Notification> getNotificationsForUser(String userId) {
         List<Notification> notifications = new ArrayList<>();
         notifications.addAll(friendRequestNotificationDatabase.searchNotifications(userId));

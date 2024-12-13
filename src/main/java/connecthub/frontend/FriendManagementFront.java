@@ -5,7 +5,7 @@ import javax.swing.*;
 
 import connecthub.backend.FriendManagement;
 import connecthub.backend.User;
-import connecthub.backend.UserAccountManager;
+//import connecthub.backend.App.userAccountManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +35,13 @@ public class FriendManagementFront extends javax.swing.JFrame {
     private javax.swing.JTable jTableFriends;
     private javax.swing.JTable jTableSuggested;
     private FriendManagement friendManagement;
-    private UserAccountManager userAccountManager;
+    //private UserAccountManager userAccountManager;
 
 
-    public FriendManagementFront(FriendManagement friendManagement , UserAccountManager userAccountManager) {
+    public FriendManagementFront(FriendManagement friendManagement) {
         initComponents();
         this.friendManagement = friendManagement;
-        this.userAccountManager = userAccountManager;
+      //  this.userAccountManager = userAccountManager;
         this.friendManagement.load();
     }
 
@@ -244,7 +244,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
 
         if (friendManagement.getFriends().getFriendsIds() != null) {
             for(String i : friendManagement.getFriends().getFriendsIds()) {
-                User user = userAccountManager.searchById(i);
+                User user = App.userAccountManager.searchById(i);
                 if (user != null) {
                     model.addRow(new Object[]{user.getUsername(), user.getUserId()});
                     jComboBoxFriends.addItem(user.getUsername());
@@ -285,7 +285,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
         for (String i : suggestedIds) {
 
             if(!receivedRequests.contains(i)) {
-                User user = userAccountManager.searchById(i);
+                User user = App.userAccountManager.searchById(i);
                 if (user != null) {
                     model.addRow(new Object[]{user.getUsername(), user.getUserId()});
                     jComboBoxSuggested.addItem(user.getUsername());
@@ -303,7 +303,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
 
         if(friendManagement.getBlocked().getBlockedIds() != null) {
             for(String i : friendManagement.getBlocked().getBlockedIds()) {
-                User user = userAccountManager.searchById(i);
+                User user = App.userAccountManager.searchById(i);
                 if (user != null) {
                     model.addRow(new Object[]{user.getUsername(), user.getUserId()});
                     jComboBoxBlocked.addItem(user.getUsername());
@@ -326,7 +326,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
         if (receivedRequests != null && !receivedRequests.isEmpty()) {
             for (String senderId : receivedRequests) {
                 // Find the user by sender ID
-                User user = userAccountManager.searchById(senderId);
+                User user = App.userAccountManager.searchById(senderId);
 
                 // Check if the user exists
                 if (user != null) {
@@ -359,7 +359,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select friend");
         } else {
             String userName = jComboBoxFriends.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.block(user.getUserId());
             friendManagement.update();
 
@@ -377,7 +377,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select suggested user");
         } else {
             String userName = jComboBoxSuggested.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.addFriend(user.getUserId());
             friendManagement.update();
             jTableFriends.removeAll();
@@ -393,7 +393,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select blocked user!");
         } else {
             String userName = jComboBoxBlocked.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.unblock(user.getUserId());
             jTableBlocked.removeAll();
             putBlocked(friendManagement);
@@ -408,7 +408,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Please select friend");
         }else{
             String userName = jComboBoxFriends.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.removeFriend(user.getUserId());
             jTableFriends.removeAll();
             putFriends(friendManagement);
@@ -425,7 +425,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a request");
         } else {
             String userName = jComboBoxRequests.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.getFriendRequestManagement().load();
             friendManagement.acceptFriend(user.getUserId());
 
@@ -444,7 +444,7 @@ public class FriendManagementFront extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please select a request");
         }else{
             String userName = jComboBoxRequests.getSelectedItem().toString();
-            User user = userAccountManager.searchByUsername(userName);
+            User user = App.userAccountManager.searchByUsername(userName);
             friendManagement.getFriendRequestManagement().load();
             friendManagement.declineFriend(user.getUserId());
 
