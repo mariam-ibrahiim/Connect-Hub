@@ -1,8 +1,11 @@
 package connecthub.frontend;
 
 import connecthub.backend.Group;
+import connecthub.backend.Newsfeed;
+import connecthub.backend.PrimaryAdmin;
 import connecthub.backend.User;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +19,7 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class PrimaryAdminGroupProfile{
-    public void show(Group group, User currentUser){
-        Stage stage = new Stage();
+    public static void show(Group group,PrimaryAdmin primaryAdmin,Stage stage,Scene previousScene){
         Scene scene;
 
         BorderPane pane = new BorderPane();
@@ -37,8 +39,36 @@ public class PrimaryAdminGroupProfile{
 
         VBox groupName = new VBox(10,name,description);
 
+        //refresh button
+
+        Image refreshImage = new Image(new File("resources\\refresh.png").toURI().toString());
+        ImageView refreshView = new ImageView(refreshImage);
+        refreshView.setFitWidth(25);
+        refreshView.setFitHeight(25);
+        refreshView.getStyleClass().add("refresh-icon");
+        refreshView.setCursor(Cursor.HAND);
+
+        refreshView.setOnMouseClicked(event -> {
+            Newsfeed.groupManager.loadFromFile();
+            show(group, primaryAdmin, stage, previousScene);
+        });
 
         groupIdentifier.getChildren().addAll(profilePhotoView,groupName);
+
+        //back button
+        Image iconImage = new Image(App.class.getResource("/back-icon.png").toExternalForm());
+        ImageView iconView = new ImageView(iconImage);
+        iconView.setCursor(Cursor.HAND);
+        iconView.getStyleClass().add("backIcon");
+
+        iconView.setFitWidth(25);
+        iconView.setFitHeight(25);
+
+
+        //back to newsfeed
+        iconView.setOnMouseClicked(event -> {
+            stage.setScene(previousScene);
+        });
 
 
         VBox menuVbox = new VBox(10);
@@ -50,7 +80,10 @@ public class PrimaryAdminGroupProfile{
         Button removeMemberButton = new Button("Remove Admin");
         Button deleteGroupButton = new Button("Delete Group");
 
-        menuVbox.getChildren().addAll(addPostButton,promoteAdminButton,demoteAdminButton,removeMemberButton,deleteGroupButton);
+
+        HBox buttons = new HBox(10);
+        buttons.getChildren().addAll(iconView,refreshView);
+        menuVbox.getChildren().addAll(buttons,addPostButton,promoteAdminButton,demoteAdminButton,removeMemberButton,deleteGroupButton);
 
 
         pane.setTop(groupIdentifier);
@@ -60,5 +93,6 @@ public class PrimaryAdminGroupProfile{
    //     scene.getStylesheets().add(GroupProfile.class.getResource("/css/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
+
     }
 }

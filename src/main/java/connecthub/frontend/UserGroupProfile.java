@@ -1,8 +1,5 @@
 package connecthub.frontend;
 
-import java.io.File;
-
-import connecthub.backend.Admin;
 import connecthub.backend.Group;
 import connecthub.backend.Newsfeed;
 import connecthub.backend.PrimaryAdmin;
@@ -19,11 +16,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class GroupProfile {
-    public static void showProfile(Admin admin){
+import java.io.File;
 
-    }
-    public static void showProfile(Group group,PrimaryAdmin primaryAdmin,Stage stage,Scene previousScene){
+public class UserGroupProfile{
+    public static void show(Group group,User user,Stage stage,Scene previousScene){
         Scene scene;
 
         BorderPane pane = new BorderPane();
@@ -43,9 +39,23 @@ public class GroupProfile {
 
         VBox groupName = new VBox(10,name,description);
 
+        //refresh button
 
+        Image refreshImage = new Image(new File("resources\\refresh.png").toURI().toString());
+        ImageView refreshView = new ImageView(refreshImage);
+        refreshView.setFitWidth(25);
+        refreshView.setFitHeight(25);
+        refreshView.getStyleClass().add("refresh-icon");
+        refreshView.setCursor(Cursor.HAND);
+
+        refreshView.setOnMouseClicked(event -> {
+            Newsfeed.groupManager.loadFromFile();
+            show(group, user, stage, previousScene);
+        });
 
         groupIdentifier.getChildren().addAll(profilePhotoView,groupName);
+
+        //back button
         Image iconImage = new Image(App.class.getResource("/back-icon.png").toExternalForm());
         ImageView iconView = new ImageView(iconImage);
         iconView.setCursor(Cursor.HAND);
@@ -65,12 +75,11 @@ public class GroupProfile {
         menuVbox.setPadding(new Insets(10,10,10,10));
 
         Button addPostButton = new Button("Add post");
-        Button promoteAdminButton = new Button("Promote Admin");
-        Button demoteAdminButton = new Button("Demote Admin");
-        Button removeMemberButton = new Button("Remove Admin");
-        Button deleteGroupButton = new Button("Delete Group");
 
-        menuVbox.getChildren().addAll(iconView,addPostButton,promoteAdminButton,demoteAdminButton,removeMemberButton,deleteGroupButton);
+
+        HBox buttons = new HBox(10);
+        buttons.getChildren().addAll(iconView,refreshView);
+        menuVbox.getChildren().addAll(buttons,addPostButton);
 
 
         pane.setTop(groupIdentifier);
@@ -81,8 +90,5 @@ public class GroupProfile {
         stage.setScene(scene);
         stage.show();
 
-    }
-    public static void showProfile(User user){
-        
     }
 }

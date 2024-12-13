@@ -180,7 +180,7 @@ public static void show (Stage stage, String userId){
                 //GroupProfile.show((Group) selectedObject,currentUser);
                 if(((Group) selectedObject).getPrimaryAdmin().getUserId().equals(currentUser.getUserId())){
                     PrimaryAdmin primaryAdmin = ((Group)selectedObject).getPrimaryAdmin();
-                    GroupProfile.showProfile((Group) selectedObject,primaryAdmin,stage,scene);
+                    PrimaryAdminGroupProfile.show((Group) selectedObject,primaryAdmin,stage,scene);
                 }
              //   else
              //   GroupProfile.showProfile((Group) selectedObject,,stage,scene);
