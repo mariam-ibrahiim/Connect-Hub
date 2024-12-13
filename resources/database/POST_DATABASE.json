@@ -1,12 +1,4 @@
 [ {
-  "contentId" : "51f74ff6-9e46-4771-b3fe-c44c8131fb00",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 10, 6, 12, 34, 31715300 ],
-  "contentDetails" : {
-    "text" : "22",
-    "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 9 - Copy\\Connect-Hub\\Connect-Hub\\resources\\profilePhoto.jpg"
-  }
-}, {
   "contentId" : "84d28fcf-6ae5-4f4c-9b33-122d35f0d35d",
   "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
   "timestamp" : [ 2024, 12, 13, 4, 18, 46, 314007000 ],
@@ -29,53 +21,5 @@
   "contentDetails" : {
     "text" : "f",
     "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 10\\Connect-Hub-Lab-10\\resources\\avatar.png"
-  }
-}, {
-  "contentId" : "a27d43f0-62cd-4b6d-b440-06ca359256a0",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 19, 58, 584822700 ],
-  "contentDetails" : {
-    "text" : "k",
-    "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 10\\Connect-Hub-Lab-10\\resources\\profilePhoto.jpg"
-  }
-}, {
-  "contentId" : "4cb3a34e-5a34-4cc9-b92c-75cf6af47406",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 26, 37, 687807300 ],
-  "contentDetails" : {
-    "text" : "3",
-    "photo" : null
-  }
-}, {
-  "contentId" : "49db483d-0395-4d9f-af36-4246961305dd",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 26, 54, 141110500 ],
-  "contentDetails" : {
-    "text" : "33",
-    "photo" : null
-  }
-}, {
-  "contentId" : "6be43d6d-e531-46f3-b691-3a2d8c7aa794",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 27, 20, 823982800 ],
-  "contentDetails" : {
-    "text" : "333",
-    "photo" : null
-  }
-}, {
-  "contentId" : "5dde715e-f3fb-497c-9cf3-361bfc817cec",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 27, 49, 5000800 ],
-  "contentDetails" : {
-    "text" : "",
-    "photo" : "C:\\TERM 5\\Programming II\\Assignments\\Lab 10\\Connect-Hub-Lab-10\\resources\\avatar.png"
-  }
-}, {
-  "contentId" : "e03c0e3e-59c5-4605-8aa1-fc4d633059fa",
-  "authorId" : "082171e5-86b8-45cc-9778-95f08f0cbff2",
-  "timestamp" : [ 2024, 12, 13, 4, 31, 36, 326696600 ],
-  "contentDetails" : {
-    "text" : "3",
-    "photo" : null
   }
 } ]

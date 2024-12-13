@@ -69,7 +69,13 @@ public class PostDatabase implements Database{
             }
         }  
         public void deletePost(Content post){
-            posts.remove(post);
+            for(Content p: posts){
+                if(p.getContentId().equals(post.getContentId())){
+                    posts.remove(p);
+                    break;
+                }
+            }
+            save();
         }
         public void addPost(Content post){
             posts.add(post);

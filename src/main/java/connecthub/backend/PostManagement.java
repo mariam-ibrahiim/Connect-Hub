@@ -14,10 +14,15 @@ public class PostManagement implements ContentManagement {
        // postDatabase = new PostDatabase();
         // storyDatabase.load();
     }
-/*     public void editPost(Post post,ContentDetails contentDetails){
-        post.setContentDetails(contentDetails);
+    public void editPost(Content post,String text,String imagePath){
+        for(Content post1:postDatabase.getPosts()){
+            if(post1.getContentId().equals(post.getContentId())){
+                post1.getContentDetails().setText(text);
+                post1.getContentDetails().setPhoto(imagePath);
+            }
+        }
         saveToDatabase();
-    } */
+    }
 
 /*
     @Override
@@ -26,12 +31,10 @@ public class PostManagement implements ContentManagement {
         saveToDatabase();
     }
 */
-
-    /*    @Override
-        public void deleteContent(Content post) {
-            postDatabase.deletePost(post);
-         //   postDatabase.save();
-        }*/
+        public void deletePost(Content post) {
+        postDatabase.deletePost(post);
+        System.out.println(post.getContentId() +" deleted");
+        }
 
     public static PostManagement getInstance() {
         PostManagement result = instance;

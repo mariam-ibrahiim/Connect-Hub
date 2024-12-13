@@ -4,11 +4,17 @@ import java.io.File;
 import java.time.format.DateTimeFormatter;
 
 import connecthub.backend.Content;
+import connecthub.backend.ContentManagement;
+import connecthub.backend.Newsfeed;
+import connecthub.backend.Post;
+import connecthub.backend.PostManagement;
 import connecthub.backend.User;
 import javafx.beans.property.ObjectProperty;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -25,6 +31,22 @@ public class PostFrame {
     public static VBox createPost(Content post, ObjectProperty<Image> profilePhoto){
 
         HBox profileIdentifier = new HBox(20);
+        GridPane managePost = new GridPane();
+        Button edit = new Button("Edit");
+        Button delete = new Button("Delete");
+
+        managePost.add(edit, 0, 0);
+        managePost.add(delete, 1, 0);
+
+        edit.setOnAction(e->{
+            EditPost.editPost(post);
+        });
+
+        delete.setOnAction(e->{
+            PostManagement postManagement = (PostManagement) Newsfeed.postManagement;
+            postManagement.deletePost(post);
+        });
+
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = post.getTimestamp().format(formatter);
@@ -72,9 +94,9 @@ public class PostFrame {
         rectangle.setHeight(attachedImageView.getFitHeight());
         attachedImageView.setClip(rectangle);
 
-        postFrame.getChildren().addAll(profileIdentifier,textPanel,attachedImageView);}
+        postFrame.getChildren().addAll(profileIdentifier,managePost,textPanel,attachedImageView);}
         else{
-            postFrame.getChildren().addAll(profileIdentifier,textPanel);
+            postFrame.getChildren().addAll(profileIdentifier,managePost,textPanel);
         }
         postFrame.getStylesheets().add(PostFrame.class.getResource("/css/Post.css").toExternalForm());
      //  profileIdentifier.getStyleClass().add("profile-identifier");
