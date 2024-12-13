@@ -5,16 +5,27 @@
 package connecthub.frontend;
 
 
+import static connecthub.backend.Newsfeed.groupManager;
+
 import java.util.List;
 
+import javax.swing.SwingUtilities;
+
+import connecthub.backend.Admin;
 import connecthub.backend.FriendManagement;
 import connecthub.backend.FriendRequestNotification;
+import connecthub.backend.Group;
 import connecthub.backend.GroupAdditionNotification;
 import connecthub.backend.GroupPostNotification;
+import connecthub.backend.GroupRequestNotification;
+import connecthub.backend.GroupRequestNotificationDatabase;
 import connecthub.backend.GroupStatusNotification;
 import connecthub.backend.Newsfeed;
 import connecthub.backend.NotficationSystem;
 import connecthub.backend.Notification;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
@@ -43,9 +54,11 @@ public class NotificationFront extends javax.swing.JFrame {
        // NotificationsComboBox.addItem("Notifications");
        NotificationsComboBox.addItem(new PlaceholderNotification());
         List<Notification> notifications = Newsfeed.notficationSystem.getNotificationsForUser(userId);
+        System.out.println(notifications);
         for (Notification notification : notifications) {
             NotificationsComboBox.addItem(notification);
         }
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,11 +112,9 @@ public class NotificationFront extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void NotificationsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationsComboBoxActionPerformed
-        // TODO add your handling code here:
-         // Get the selected item (which is a Notification object)
+    private void NotificationsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
          Object selectedItem = NotificationsComboBox.getSelectedItem();
          if (selectedItem == null) {
              System.out.println("Selected item is null");
@@ -125,56 +136,47 @@ public class NotificationFront extends javax.swing.JFrame {
             
             
         } else if (selectedNotification instanceof GroupPostNotification) {
-            GroupPostWindow groupPostWindow = new GroupPostWindow();
-            setVisible(false);
+            SwingUtilities.invokeLater(()->{
+                new GroupStatusWindow(userId,selectedNotification.getId2()).setVisible(true);
+            });
             
         } else if (selectedNotification instanceof GroupStatusNotification) {
-            GroupStatusWindow groupStatusWindow = new GroupStatusWindow();
-            setVisible(false);
+            SwingUtilities.invokeLater(()->{
+                new GroupStatusWindow(userId,selectedNotification.getId2()).setVisible(true);
+            });
             
         } else if (selectedNotification instanceof GroupAdditionNotification) {
-            GroupAdditionWindow groupAdditionWindow = new GroupAdditionWindow();
-            setVisible(false);
+            SwingUtilities.invokeLater(()->{
+                dispose();
+                Platform.runLater(()->{
+                    Stage stage = App.getPrimaryStage();
+                    Scene previousScene = stage.getScene();
+                    String groupId = selectedNotification.getId2();
+                    Group group = Newsfeed.groupManager.searchGroupById(groupId);
+                    Admin admin = group.getAdmin(userId);
+                    if(group.getPrimaryAdmin().getUserId().equals(userId)) {
+                        PrimaryAdminGroupProfile.show(group,group.getPrimaryAdmin(),stage,previousScene);
+                    }
+                    else if(admin!=null){
+                        AdminGroupProfile.show(group,admin,stage,previousScene);
+                    }
+                    else {
+                        UserGroupProfile.show(group,App.userAccountManager.searchById(userId),stage,previousScene);
+                    }
+                });
+            });
+
+        }
+        else if(selectedNotification instanceof GroupRequestNotification){
+            dispose();
+            Platform.runLater(()->{
+                GroupRequestNotification notification = Newsfeed.notficationSystem.searchForGroupRequestNotification(userId, selectedNotification.getId2());
+                GroupRequestWindow.show(notification.getSenderId(),selectedNotification.getId2());
+            });
         }
     }
-    }//GEN-LAST:event_NotificationsComboBoxActionPerformed
+    }
 
-    /**
-     * @param args the command line arguments
-     */
-    //public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-       /*  try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NotificationFront.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NotificationFront.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NotificationFront.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NotificationFront.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } */
-        //</editor-fold>
-
-        /* Create and display the form */
- /*        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NotificationFront(userId).setVisible(true);
-            }
-        }); */
-  //  }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Notification> NotificationsComboBox;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;

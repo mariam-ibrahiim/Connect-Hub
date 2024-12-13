@@ -43,6 +43,8 @@ public static void show (Stage stage, String userId){
 
         stage.setOnCloseRequest(e->{
             App.userAccountManager.logout(currentUser);
+            App.userAccountManager.save();
+            App.userAccountManager.load();
         });
 
         //instantiate User profile
@@ -118,6 +120,8 @@ public static void show (Stage stage, String userId){
         });
         logoutButton.setOnAction(e->{
             App.userAccountManager.logout(currentUser);
+                        App.userAccountManager.save();
+            App.userAccountManager.load();
             Platform.exit();
         });
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,11 +184,12 @@ public static void show (Stage stage, String userId){
             if(!isMember){
                 boolean ans = AlertBox.displayConfirmation("Do you want to join "+group.getGroupName()+" group?");
                 if(ans) {
-                    GroupRequest groupRequest = new GroupRequest(group.getGroupId(),userId);
-                    Newsfeed.groupRequestsDatabase.addRequest(groupRequest);
-                    Newsfeed.groupRequestsDatabase.save();
-                    Notification joinNotification = new GroupAdditionNotification(userId,group.getGroupId());
-                    Newsfeed.notficationSystem.addNotification(joinNotification);
+                  //  Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(userId,group.getGroupId(), "group request"));
+                    GroupRequest groupRequest = new GroupRequest(group.getGroupId(),currentUser.getUserId());
+                    Newsfeed.groupRequestsManager.addRequest(groupRequest);
+                    Newsfeed.groupRequestsManager.saveToFile();
+                   // Notification joinNotification = new GroupAdditionNotification(userId,group.getGroupId());
+                  //  Newsfeed.notficationSystem.addNotification(joinNotification);
                     AlertBox.displayMessage("Join request sent!");
                 }
             }
@@ -313,6 +318,8 @@ refreshView.setOnMouseClicked(e->{
             ImageView friendView = new ImageView();
             friendView.imageProperty().bind(friendProfile);
             CirclePhotoFrame.createCircleFrame(friendView);
+            friendView.setFitHeight(40);
+            friendView.setFitWidth(40);
             Label friendName = new Label(friend.getName());
             friendName.getStyleClass().add("specialLabel");
             Label status = new Label(friend.getStatus());

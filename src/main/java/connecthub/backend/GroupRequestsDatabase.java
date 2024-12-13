@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GroupRequestsDatabase implements Database{
@@ -32,7 +33,16 @@ public class GroupRequestsDatabase implements Database{
     }
 
     public void removeRequest(GroupRequest groupRequest){
-        requests.remove(groupRequest);
+        Iterator<GroupRequest> iterator = requests.iterator();
+        while (iterator.hasNext()) {
+            GroupRequest gr= iterator.next();
+            if (gr.getGroupRequestId().equals(groupRequest.getGroupRequestId())) {
+                iterator.remove(); 
+                System.out.println("removed");
+                break;
+            }
+        }
+        save();
     }
 
     @Override
@@ -50,6 +60,7 @@ public class GroupRequestsDatabase implements Database{
         ObjectMapper objectMapper = new ObjectMapper();
 
         File file = new File("resources\\database\\" + Constants.GROUP_REQUESTS_FILENAME + ".json");
+        System.out.println(requests);
         if (!file.exists() || file.length() == 0) {
             return;
         }

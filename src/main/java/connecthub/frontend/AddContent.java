@@ -1,6 +1,7 @@
 package connecthub.frontend;
 
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -94,6 +95,14 @@ public class AddContent {
             Post post = new Post(id, caption.getText(),imagePath);
             group.addPost(post);
             Newsfeed.groupManager.saveToFile();
+            List<String> memberIds = group.getMembers();
+            for(String memberId : memberIds){
+                if(memberId.equals(id))
+                    continue;
+                else {
+                    Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(memberId,group.getGroupId(), "group post"));
+                }
+            }
             imagePath=null;
             window.close();
         });

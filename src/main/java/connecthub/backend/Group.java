@@ -1,6 +1,7 @@
 package connecthub.backend;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,7 +61,12 @@ public class Group {
         admins.add(admin);
     }
     public void removeAdmin(Admin admin){
-        admins.remove(admin);
+        Iterator<Admin> iterator = admins.iterator();
+        while(iterator.hasNext()){
+            Admin a = iterator.next();
+            if(a.getUserId().equals(admin.getUserId()))
+                iterator.remove();
+        }
     }
 
     public void setAdmins(List<Admin> admins) {
@@ -72,7 +78,7 @@ public class Group {
     }
 
     public void addPost(Post post){
-        posts.add(post);
+        posts.add(post);;
     }
     public void setPosts(List<Post> posts) {
         this.posts = posts;
@@ -123,5 +129,7 @@ public class Group {
     public String toString(){
         return groupName;
     }
+
+
 
 }

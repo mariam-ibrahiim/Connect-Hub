@@ -125,7 +125,7 @@ public class OthersProfile{
                 User postOwner = App.userAccountManager.searchById(post.getAuthorId());
                 ObjectProperty<Image> profile = new SimpleObjectProperty<>();
                 profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
-                content.getChildren().add(PostFrame.createPost(post,profile));
+                content.getChildren().add(ViewerPostFrame.createPost(post,profile));
         }
         centerPanel.setContent(content);
         }

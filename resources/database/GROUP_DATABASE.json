@@ -1,11 +1,11 @@
 [ {
-  "groupName" : "ssp",
-  "groupId" : "ba2f4d7e-0ba1-4863-89cb-060e717bd8ac",
+  "groupName" : "test",
+  "groupId" : "67969e93-be49-4dc9-91a6-acfeb05023cb",
   "primaryAdmin" : {
-    "userId" : "d6063696-91b1-4d77-b879-79f614f9d507"
+    "userId" : "c06fb504-f282-4cb6-8e21-2b564ab8fd99"
   },
   "admins" : [ ],
-  "members" : [ "d6063696-91b1-4d77-b879-79f614f9d507" ],
+  "members" : [ "c06fb504-f282-4cb6-8e21-2b564ab8fd99", "0d937bbf-1c63-4744-a565-e73cbcfdd712" ],
   "profile" : {
     "profilePhoto" : "resources\\defaultprofile.jpg",
     "coverPhoto" : "resources\\defaultprofile.jpg",

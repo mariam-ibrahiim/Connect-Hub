@@ -15,6 +15,8 @@ public class PrimaryAdmin extends Admin{
     }
 
     @Override
+
+    
     public void removeMember(User user,Group group){
         List<String> members = groupManager.searchGroupById(group.getGroupId()).getMembers();
         members.remove(user.getUserId());
@@ -23,15 +25,22 @@ public class PrimaryAdmin extends Admin{
             group.removeAdmin(admin);
     }
 
+    //promote user to admin and notify user promoted
+
     public void promoteUser(User user, Group group){
 
         Admin admin = new Admin(user.getUserId());
         groupManager.searchGroupById(group.getGroupId()).addAdmin(admin);
-        Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(getUserId(), group.getGroupId(), "group status"));
+        groupManager.saveToFile();
+        Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(admin.getUserId(), group.getGroupId(), "group status"));
     }
+
+    //demote to user and notify user demoted
 
     public void demoteAdmin(Admin admin,Group group){
         groupManager.searchGroupById(group.getGroupId()).removeAdmin(admin);
+        groupManager.saveToFile();
+        Newsfeed.notficationSystem.addNotification(NotificationFactory.createNotification(admin.getUserId(), group.getGroupId(), "group status"));
     }
 
     public void deleteGroup(Group group){

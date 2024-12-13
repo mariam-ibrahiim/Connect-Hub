@@ -203,7 +203,8 @@ public class FriendsDataBase {
                     !userData.blocked.contains(potentialSuggestion) &&
                     !userData.suggested.contains(potentialSuggestion) &&
                     !receivedRequests.contains(potentialSuggestion) &&
-                    !sentRequests.contains(potentialSuggestion)) {
+                    !sentRequests.contains(potentialSuggestion)  &&
+                    !getBlocked(potentialSuggestion).contains(userId)) {
                 suggested.add(potentialSuggestion); // Add to the suggested list
             }
         }
@@ -233,13 +234,12 @@ public class FriendsDataBase {
     }
 
 
-
-
     public void populateSuggestions(UserDatabase userDatabase , ArrayList<String> recivedRequests , ArrayList<String> sentRequests) {
         for (String userId : database.keySet()) {
             fillSuggested(userDatabase, userId, recivedRequests , sentRequests);
         }
     }
+    
 
 
     // Inner class to store user data

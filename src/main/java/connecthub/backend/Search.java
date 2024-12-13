@@ -24,8 +24,9 @@ public class Search {
     public static List<Object> groupSearch (String key){
         List<Object> results = new ArrayList<>();
         for(Group group: Newsfeed.groupManager.getGroups()){
-            if(group.getGroupName().toLowerCase().contains(key))
-                results.add(group);
+            if(group.getGroupName().toLowerCase().contains(key)){
+                    results.add(group);
+            }
         }
         return results;
     }

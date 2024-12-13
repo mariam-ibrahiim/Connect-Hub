@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GroupStatusNotificationDatabase implements NotificationDatabase{
@@ -68,9 +69,12 @@ public class GroupStatusNotificationDatabase implements NotificationDatabase{
     }
     @Override
     public void deleteNotification(Notification notification) {
-        for(Notification n : notifications){
-            if(n.getNotificationId().equals(notification.getNotificationId())){
-                notifications.remove(n);
+       Iterator<Notification> iterator = notifications.iterator();
+        while (iterator.hasNext()) {
+            Notification n = iterator.next();
+            if (n.getNotificationId().equals(notification.getNotificationId())) {
+                iterator.remove();
+                System.out.println("removed");
                 break;
             }
         }

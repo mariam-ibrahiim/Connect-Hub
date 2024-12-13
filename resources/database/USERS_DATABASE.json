@@ -1,36 +1,23 @@
 [ {
-  "name" : "Nadine",
-  "userId" : "d6063696-91b1-4d77-b879-79f614f9d507",
-  "email" : "n@gmail.com",
-  "username" : "nadine",
-  "password" : "$2a$10$XinHNb2ocLsnkSmiKslUZusLLyDHmJ41rag56H7cXAIeNE5fZ6Yve",
-  "dateOfBirth" : "2024-12-01",
-  "status" : "offline",
-  "profile" : {
-    "profilePhoto" : "resources\\defaultprofile.jpg",
-    "coverPhoto" : "resources\\defaultprofile.jpg",
-    "bio" : "No bio"
-  }
-}, {
-  "name" : "Mariam",
-  "userId" : "65a2a939-f18f-4e13-949b-8c28028c13b7",
+  "name" : "mariam",
+  "userId" : "c06fb504-f282-4cb6-8e21-2b564ab8fd99",
   "email" : "m@gmail.com",
-  "username" : "mariam",
-  "password" : "$2a$10$.Unt97WMTN/g7/IePAMV2.uURYmduFbfchjdtDrdFWGoYIMAqu3Cy",
-  "dateOfBirth" : "2024-12-01",
-  "status" : "offline",
+  "username" : "m",
+  "password" : "$2a$10$UUWc8c0XbPzbhT8t.7cg1e4PXi81tFa8KNli2GUyRxSPna4yG4djG",
+  "dateOfBirth" : "2025-01-06",
+  "status" : "online",
   "profile" : {
     "profilePhoto" : "resources\\defaultprofile.jpg",
     "coverPhoto" : "resources\\defaultprofile.jpg",
     "bio" : "No bio"
   }
 }, {
-  "name" : "Nada",
-  "userId" : "e7e7b660-2382-4e59-a16a-d22da9ec700d",
-  "email" : "nada@gmail.com",
-  "username" : "nada",
-  "password" : "$2a$10$eH7rR5SRWXH6/4tfR1F3Lui7wO7M/nxp5SwR5w5i3kJHEvbdwdtZm",
-  "dateOfBirth" : "2024-12-01",
+  "name" : "nadine",
+  "userId" : "0d937bbf-1c63-4744-a565-e73cbcfdd712",
+  "email" : "n@gmail.com",
+  "username" : "n",
+  "password" : "$2a$10$QgNSLDMcWWCqa.WBISJRwu1B1CMje6gl8rRc3aDX7Easd9lJFUYui",
+  "dateOfBirth" : "2024-12-08",
   "status" : "offline",
   "profile" : {
     "profilePhoto" : "resources\\defaultprofile.jpg",

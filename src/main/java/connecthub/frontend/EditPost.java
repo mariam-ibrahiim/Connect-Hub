@@ -93,6 +93,7 @@ public class EditPost {
             }
             post.getContentDetails().setPhoto(imagePath);
             post.getContentDetails().setText(caption.getText());
+            Newsfeed.groupManager.saveToFile();
             /*PostManagement postManagement = (PostManagement) Newsfeed.postManagement;
             postManagement.editPost(post, caption.getText(), imagePath);*/
             imagePath=null;

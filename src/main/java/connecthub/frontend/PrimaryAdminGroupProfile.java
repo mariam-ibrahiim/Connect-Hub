@@ -101,7 +101,6 @@ public class PrimaryAdminGroupProfile{
                 boolean ans = AlertBox.displayConfirmation("Are you sure you want to promote " + selectedUser.getName());
                 if (ans) {
                     primaryAdmin.promoteUser(selectedUser, group);
-                    Newsfeed.groupManager.saveToFile();
                 }
             }
         });
@@ -119,7 +118,6 @@ public class PrimaryAdminGroupProfile{
                 boolean ans = AlertBox.displayConfirmation("Are you sure you want to demote " + App.userAccountManager.searchById(selectedAdmin.getUserId()).getName());
                 if (ans) {
                     primaryAdmin.demoteAdmin(selectedAdmin, group);
-                    Newsfeed.groupManager.saveToFile();
                 }
             }
         });

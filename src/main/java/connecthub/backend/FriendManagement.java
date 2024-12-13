@@ -112,7 +112,7 @@ public class FriendManagement {
         if (request != null) {
             friendRequestManagement.acceptRequest(senderId, userId);
             System.out.println("Request accepted.");
-            Notification notification = Newsfeed.notficationSystem.searchForNotification(userId, senderId);
+            Notification notification = Newsfeed.notficationSystem.searchForFriendRequestNotification(userId, senderId);
             if(notification!=null)
             Newsfeed.notficationSystem.removeNotification(notification);
         } else {
@@ -136,7 +136,7 @@ public class FriendManagement {
             // Decline the friend request (remove it from the database)
             friendRequestManagement.declineRequest(senderId, userId);
             System.out.println("Request declined.");
-            Notification notification = Newsfeed.notficationSystem.searchForNotification(userId, senderId);
+            Notification notification = Newsfeed.notficationSystem.searchForFriendRequestNotification(userId, senderId);
             if(notification!=null)
             Newsfeed.notficationSystem.removeNotification(notification);
         } else {
