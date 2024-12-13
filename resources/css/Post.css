@@ -5,6 +5,11 @@
 }
 .profile-identifier{
 }
-*{
+/**{
     -fx-font-size: 16px;
+}*/
+.smallButton{
+    -fx-pref-width: 50px;
+    -fx-pref-height: 35px;
+    -fx-font-size: 9px;
 }

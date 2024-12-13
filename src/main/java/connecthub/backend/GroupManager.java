@@ -20,6 +20,7 @@ public class GroupManager {
         return instance;
     }
 
+    //linear group search by id and returns the group
     public Group searchGroupById(String id){
         for(Group group: getGroups()){
             if(group.getGroupId().equals(id))

@@ -41,15 +41,15 @@ public abstract class Notification{
         return id2;
     }
 
+    public Notification(){
+
+    }
     public Notification(String userId,String id2) {
         notificationId = UUID.randomUUID().toString();
         this.userId = userId;
         this.id2 = id2;
         timestamp=LocalDateTime.now();
 
-    }
-
-    public Notification(){
     }
 
     public String getUserId() {

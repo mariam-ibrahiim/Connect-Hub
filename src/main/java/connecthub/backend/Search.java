@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Search {
+    //linear user search by id and returns the object
     public static List<Object> userSearch(String key,FriendManagement friendManager){
         List<Object> results = new ArrayList<>();
         for(User user : App.userAccountManager.getUsers()){
@@ -19,6 +20,7 @@ public class Search {
         return results;
     }
 
+    //linear group search by id and returns the object
     public static List<Object> groupSearch (String key){
         List<Object> results = new ArrayList<>();
         for(Group group: Newsfeed.groupManager.getGroups()){

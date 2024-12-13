@@ -38,9 +38,9 @@ public class GroupStatusNotificationDatabase implements NotificationDatabase{
             e.printStackTrace();
         }
     }
-    public List<Notification> getNotifications() {
+    /*public List<Notification> getNotifications() {
         return notifications;
-    }
+    }*/
     @Override
     public void load() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -54,7 +54,7 @@ public class GroupStatusNotificationDatabase implements NotificationDatabase{
 
         try {
             //Deserialize
-            notifications = objectMapper.readerFor(Notification.class).readValue(file);
+            //notifications = objectMapper.readerFor(Notification.class).readValue(file);
             notifications = objectMapper.readValue(file,
                     objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, GroupStatusNotification.class));
         } catch (IOException e) {

@@ -183,22 +183,23 @@ public static void show (Stage stage, String userId){
                     GroupRequest groupRequest = new GroupRequest(group.getGroupId(),userId);
                     Newsfeed.groupRequestsDatabase.addRequest(groupRequest);
                     Newsfeed.groupRequestsDatabase.save();
+                    Notification joinNotification = new GroupAdditionNotification(userId,group.getGroupId());
+                    Newsfeed.notficationSystem.addNotification(joinNotification);
                     AlertBox.displayMessage("Join request sent!");
                 }
             }
             else {
                 Admin admin = group.getAdmin(userId);
                 if(group.getPrimaryAdmin().getUserId().equals(userId)) {
-                    GroupProfile.showProfile(group,group.getPrimaryAdmin());
+                    PrimaryAdminGroupProfile.show(group,group.getPrimaryAdmin(),stage,scene);
                 }
                 else if(admin!=null){
-                    GroupProfile.showProfile(group,admin);
+                    AdminGroupProfile.show(group,admin,stage,scene);
                 }
                 else {
-                    GroupProfile.showProfile(group,currentUser);
+                    UserGroupProfile.show(group,currentUser,stage,scene);
                 }
             }
-
             //GroupProfile.show((Group) selectedObject,currentUser);
         }
         //new OthersProfile(stage,scene,selectedUser,friendManager);
@@ -207,24 +208,6 @@ public static void show (Stage stage, String userId){
 
 
     VBox searchVbox = new VBox(10, searchHbox, listView);
-
-        listView.setOnMouseClicked(e->{
-            Object selectedObject = listView.getSelectionModel().getSelectedItem();
-            if(selectedObject instanceof User)
-                SearchResultWindow.show(stage,scene,friendManager,(User) selectedObject);
-            if(selectedObject instanceof Group) {
-                //GroupProfile.show((Group) selectedObject,currentUser);
-                if(((Group) selectedObject).getPrimaryAdmin().getUserId().equals(currentUser.getUserId())){
-                    PrimaryAdmin primaryAdmin = ((Group)selectedObject).getPrimaryAdmin();
-                    PrimaryAdminGroupProfile.show((Group) selectedObject,primaryAdmin,stage,scene);
-                }
-             //   else
-             //   GroupProfile.showProfile((Group) selectedObject,,stage,scene);
-            }
-            //new OthersProfile(stage,scene,selectedUser,friendManager);
-        });
-
-
 
 
         VBox menuVbox = new VBox(15,refreshView,profileIdentifier,manageFriendsButton,addStoryButton,addPostButton,createGroupButton,notificationButton,viewGroupsButton,logoutButton,searchVbox);
@@ -295,14 +278,14 @@ refreshView.setOnMouseClicked(e->{
         stage.show();
     }
     private static void showPosts(FriendManagement friendManager,Newsfeed newsfeed,User user,ScrollPane postScrollPane){
-        VBox postsVBox = new VBox();
+        VBox postsVBox = new VBox(20);
         postScrollPane.setContent(null);
         List<Post> posts = newsfeed.getFriendsPosts(user.getUserId());
         for(Post post: posts){
             User postOwner = App.userAccountManager.searchById(post.getAuthorId());
             ObjectProperty<Image> profile = new SimpleObjectProperty<>();
             profile.set(new Image(new File(postOwner.getProfile().getProfilePhoto()).toURI().toString()));
-           postsVBox.getChildren().add(PostFrame.createPost(post,profile));
+           postsVBox.getChildren().add(ViewerPostFrame.createPost(post,profile));
         }
         postScrollPane.setContent(postsVBox);
     }

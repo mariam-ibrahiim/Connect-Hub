@@ -1,0 +1,17 @@
+[ {
+  "contentId" : "e628cf3b-1b62-469b-97ba-9c4338ba47ef",
+  "authorId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "timestamp" : [ 2024, 12, 13, 11, 26, 32, 743889100 ],
+  "contentDetails" : {
+    "text" : "post gdid",
+    "photo" : "C:\\Users\\Nadine\\Desktop\\Lab10-semiFinal\\resources\\avatar.png"
+  }
+}, {
+  "contentId" : "fa6ada32-18fa-4c2f-a1e2-1f50754e1c74",
+  "authorId" : "d6063696-91b1-4d77-b879-79f614f9d507",
+  "timestamp" : [ 2024, 12, 13, 12, 17, 24, 558409700 ],
+  "contentDetails" : {
+    "text" : "caption bas",
+    "photo" : null
+  }
+} ]

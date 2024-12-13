@@ -12,6 +12,7 @@ public class Group {
     private List<String> members = new ArrayList<>();
     private Profile profile = new Profile();
     private String description = "No description";
+    private List<Post> posts = new ArrayList<>();
 
     public Group(){
 
@@ -66,6 +67,19 @@ public class Group {
         this.admins = admins;
     }
 
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void addPost(Post post){
+        posts.add(post);
+    }
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+    public void removeMember(String id){
+        members.remove(id);
+    }
     public List<String> getMembers() {
         return members;
     }

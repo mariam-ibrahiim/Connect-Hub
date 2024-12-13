@@ -18,6 +18,9 @@ public class PrimaryAdmin extends Admin{
     public void removeMember(User user,Group group){
         List<String> members = groupManager.searchGroupById(group.getGroupId()).getMembers();
         members.remove(user.getUserId());
+        Admin admin = group.getAdmin(user.getUserId());
+        if(admin != null)
+            group.removeAdmin(admin);
     }
 
     public void promoteUser(User user, Group group){

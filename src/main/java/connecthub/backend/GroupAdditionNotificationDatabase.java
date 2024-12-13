@@ -53,7 +53,7 @@ public class GroupAdditionNotificationDatabase implements NotificationDatabase{
 
         try {
             //Deserialize
-            notifications = objectMapper.readerFor(Notification.class).readValue(file);
+            //notifications = objectMapper.readerFor(GroupAdditionNotification.class).readValue(file);
             notifications = objectMapper.readValue(file,
                     objectMapper.getTypeFactory().constructCollectionType(ArrayList.class, GroupAdditionNotification.class));
         } catch (IOException e) {

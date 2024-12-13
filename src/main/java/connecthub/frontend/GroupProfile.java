@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/*
 public class GroupProfile {
     private static Stage stage = new Stage();
     private static Scene scene;
@@ -72,3 +73,4 @@ public class GroupProfile {
 
     }
 }
+*/

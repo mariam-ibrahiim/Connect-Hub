@@ -1,5 +1,7 @@
 package connecthub.backend;
 
+import connecthub.frontend.App;
+
 import java.util.List;
 
 public class Admin{
@@ -37,6 +39,6 @@ public class Admin{
 
     @Override
     public String toString(){
-        return userId;
+        return App.userAccountManager.searchById(userId).getName();
     }
 }
